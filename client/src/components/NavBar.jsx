@@ -37,10 +37,9 @@ function ResponsiveAppBar() {
   };
 
   return (
-    <AppBar position="static" className='navContainer'>
+    <AppBar position="static" className='navContainer ps-16 pr-16 max-sm:ps-0 max-sm:pr-0 max-lg:ps-6 max-lg:pr-6'>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
             variant="h6"
             noWrap
@@ -49,14 +48,13 @@ function ResponsiveAppBar() {
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 900,
-              letterSpacing: '.3rem',
-              color: 'inherit',
+              fontSize: '29px',
+              color: 'white',
               textDecoration: 'none',
             }}
+            className='pageLogo'
           >
-            LOGO
+            Enrich.
           </Typography>
 
           <Box
@@ -98,8 +96,6 @@ function ResponsiveAppBar() {
             </Menu>
           </Box>
 
-
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
           <Typography
             variant="h5"
             noWrap
@@ -115,8 +111,9 @@ function ResponsiveAppBar() {
               color: 'inherit',
               textDecoration: 'none',
             }}
+            className='pageLogo'
           >
-            LOGO
+            Enrich
           </Typography>
 
           <Box
@@ -129,7 +126,6 @@ function ResponsiveAppBar() {
                 onClick={handleCloseNavMenu}
                 className='pageButton'
                 sx={{ my: 2, color: 'white', display: 'block' }}
-
               >
                 {page}
               </Button>
@@ -137,7 +133,7 @@ function ResponsiveAppBar() {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Button sx={{ color: 'white' }}>Book Now</Button>
+            <Button sx={{ color: 'white' }} className='bookButton'>Book Now</Button>
             <Menu
               sx={{ mt: '35px' }}
               id="menu-appbar"
