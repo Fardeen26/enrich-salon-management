@@ -1,4 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400..800&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Mukta:wght@200;300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Satisfy&family=Sedan+SC&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@100..900&family=Merriweather+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@100..900&family=Mate:ital@0;1&family=Merriweather+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@100..900&family=Mate:ital@0;1&family=Merriweather+Sans:ital,wght@0,300..800;1,300..800&family=Silkscreen:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@100..900&family=Mate:ital@0;1&family=Merriweather+Sans:ital,wght@0,300..800;1,300..800&family=Silkscreen:wght@400;700&family=Yeseva+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@100..900&family=Mate:ital@0;1&family=Merriweather+Sans:ital,wght@0,300..800;1,300..800&family=Mukta+Malar:wght@200;300;400;500;600;700;800&family=Silkscreen:wght@400;700&family=Yeseva+One&display=swap');
 
 .image-container {
     margin-top: -5px !important;
@@ -6,12 +12,25 @@
 
 .text-container {
     position: absolute !important;
-    font-family: "Sedan SC", serif;
+    /* font-family: "Sedan SC", serif; */
+}
+
+.hero-heading {
+    /* font-family: "Sedan SC", serif; */
+    /* font-family: "Heebo", sans-serif !important; */
+    /* font-family: "Merriweather Sans", sans-serif; */
+    font-family: "Mate", serif;
+    /* font-family: "Silkscreen", sans-serif; */
+    /* font-family: "Yeseva One", serif; */
+    /* font-family: "Mukta Malar", sans-serif; */
+    letter-spacing: 3px;
+    /*font-weight: 500 !important; */
 }
 
 .hero-desc {
     letter-spacing: 1px;
-    color: rgb(172, 172, 172);
+    /* color: rgb(172, 172, 172); */
+    color: white;
 }
 
 .hero-btn {
@@ -101,3 +120,27 @@
         padding: 6px 10px !important;
     }
 }
+
+@media screen and (max-width: 440px) {
+
+    .text-container {
+        top: 91px !important;
+        left: 49px !important;
+    }
+
+    .hero-heading {
+        letter-spacing: 1px !important;
+        font-size: 22px !important;
+    }
+
+    .hero-desc {
+        font-size: 8px !important;
+        letter-spacing: .8px !important;
+    }
+
+    .hero-btn {
+        --border-width: 2px !important;
+    }
+}
+
+/* then alarm vendor install mobile oil fury volume cousin labor piece bunker */

@@ -1,4 +1,6 @@
-import * as React from 'react';
+import { Link as RouterLink } from 'react-router-dom';
+import { Link as ScrollLink } from 'react-scroll';
+import React, { useRef } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -12,14 +14,21 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import BookingForm from './BookingForm';
 import './NavBar.css';
 
-const pages = ['Home', 'About', 'Services', 'Products', 'Contact'];
+const pages = ['Home', 'About', 'Services', 'Staff', 'Testimonials'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const ref = useRef(null);
+
+  const handleClick = () => {
+    console.log("wchbwci")
+    ref.current?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -37,7 +46,8 @@ function ResponsiveAppBar() {
   };
 
   return (
-    <AppBar position="static" className='navContainer ps-16 pr-16 max-sm:ps-0 max-sm:pr-0 max-lg:ps-6 max-lg:pr-6'>
+
+    <AppBar position="sticky" className='navContainer ps-16 pr-16 max-sm:ps-0 max-sm:pr-0 max-lg:ps-6 max-lg:pr-6 Home'>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
@@ -52,9 +62,10 @@ function ResponsiveAppBar() {
               color: 'white',
               textDecoration: 'none',
             }}
-            className='pageLogo'
+            className='pageLogo text-6xl'
           >
-            Enrich.
+            {/* Enrich. */}
+            <ScrollLink activeClass="active" to='Home' spy={true} smooth={true} offset={-250} duration={600} >Enrich.</ScrollLink>
           </Typography>
 
           <Box
@@ -91,6 +102,7 @@ function ResponsiveAppBar() {
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">{page}</Typography>
+                  {/* <button onClick={handleClick}>{page}</button> */}
                 </MenuItem>
               ))}
             </Menu>
@@ -111,7 +123,7 @@ function ResponsiveAppBar() {
               color: 'inherit',
               textDecoration: 'none',
             }}
-            className='pageLogo'
+            className='pageLogo-sm'
           >
             Enrich
           </Typography>
@@ -121,19 +133,12 @@ function ResponsiveAppBar() {
             className="pageBox"
           >
             {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                className='pageButton'
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                {page}
-              </Button>
+              page === 'Home' ? <ScrollLink sx={{ my: 2, color: 'white', display: 'block' }} className='pageButton cursor-pointer uppercase' activeClass="active" to={page} spy={true} smooth={true} offset={-250} duration={600} >{page}</ScrollLink> : <ScrollLink sx={{ my: 2, color: 'white', display: 'block' }} className='pageButton cursor-pointer uppercase' activeClass="active" to={page} spy={true} smooth={true} offset={-100} duration={600} >{page}</ScrollLink>
             ))}
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Button sx={{ color: 'white' }} className='bookButton'>Book Now</Button>
+            <RouterLink to={`book`}><Button sx={{ color: 'white' }} className='bookButton'>Book Now</Button></RouterLink>
             <Menu
               sx={{ mt: '35px' }}
               id="menu-appbar"

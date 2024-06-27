@@ -30,3 +30,19 @@
     font-family: "Satisfy", cursive !important;
     padding-left: 1.3px;
 }
+
+.pageLogo-sm {
+    font-family: "Satisfy", cursive !important;
+    padding-left: 30px;
+    font-size: 18px !important;
+    /* padding-left: 10px !important; */
+}
+
+@media screen and (max-width: 440px) {
+    .bookButton {
+        font-size: 11px !important;
+    }
+    .pageButton {
+        padding: 0 0px 0 0px !important;
+    }
+}

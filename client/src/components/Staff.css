@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap');
+
+.staff-name {
+    font-family: "Cinzel", serif;
+}
+
+
+@media screen and (max-width: 440px) {
+    .staff-detail {
+        padding: 8px 10px 8px 10px !important;
+    }
+}
+
