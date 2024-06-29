@@ -1,6 +1,14 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from 'axios';
+import dayjs from 'dayjs';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const BookingForm = () => {
   const [price, setPrice] = useState(100);
@@ -9,9 +17,11 @@ const BookingForm = () => {
     email: "",
     phone: "",
     date: "",
+    time: "",
     service: "Hair Cut",
     price: 100
   });
+  const [date, setDate] = useState(new Date());
 
   const {
     register,
@@ -57,14 +67,14 @@ const BookingForm = () => {
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white text-black">
               Book Your Seat
             </h1>
-            <form className="space-y-4 md:space-y-6 text-black" onSubmit={handleSubmit(onSubmit)}>
-              <div>
+            <form className="text-black" onSubmit={handleSubmit(onSubmit)}>
+              <div className="mb-2">
                 <label htmlFor="name" className="block mb-2 text-sm font-medium dark:text-white text-black">Name</label>
-                <input type="text" name="name" id="name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required="" {...register("name")} onChange={handleOnChange} />
+                <input type="text" name="name" id="name" className="bg-black bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required="" {...register("name")} onChange={handleOnChange} />
               </div>
-              <div>
+              <div className="mb-2">
                 <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white text-black">Email</label>
-                <input type="text" name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com"  {...register('email', {
+                <input type="text" name="email" id="email" className="bg-black bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com"  {...register('email', {
                   required: true,
                   pattern: {
                     value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
@@ -76,22 +86,50 @@ const BookingForm = () => {
                   <div className="text-red-500">Enter a valid email</div>
                 )}
               </div>
-              <div>
+              <div className="mb-2">
                 <label htmlFor="phone" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white text-black">Phone Number</label>
-                <input type="tel" name="phone" id="phone" placeholder="1234567890" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" {...register("phone", { required: true, minLength: 10, maxLength: 10 })} onChange={handleOnChange} />
+                <input type="tel" name="phone" id="phone" placeholder="1234567890" className="bg-black bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" {...register("phone", { required: true, minLength: 10, maxLength: 10 })} onChange={handleOnChange} />
                 {errors.phone && (
                   <div className="text-red-500">Phone number should be valid!</div>
                 )}
               </div>
-              <div>
-                <label htmlFor="date" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white text-black">Chose your date</label>
-                <input type="datetime-local" name="date" id="date" placeholder="" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" {...register("date")} onChange={handleOnChange} />
+              <div className="flex flex-wrap mb-2">
+                {/* <label htmlFor="date" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white text-black">Chose your date</label>
+                <input type="datetime-local" name="date" id="date" placeholder="" className="bg-black text-white bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" {...register("date")} onChange={handleOnChange} /> */}
+
+                {/* METHOD 2 */}
+                {/* <LocalizationProvider dateAdapter={AdapterDayjs} className="text-white" style={{color: 'white'}}>
+                  <DemoContainer components={['DateTimePicker']} className="text-white" style={{color: 'white'}}>
+                    <DateTimePicker
+                      label="Controlled picker"
+                      value={value}
+                      onChange={(newValue) => setValue(newValue)}
+                      className="bg-black text-white border border-gray-300 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:text-white light:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      style={{color: 'white'}}
+                    />
+                  </DemoContainer>
+                </LocalizationProvider> */}
+
+                {/* <DatePicker selected={date} onChange={(date) => setDate(date)} /> */}
+
+                <div className="flex-1 w-full mr-3">
+                  <label htmlFor="date" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white text-black">Chose your date</label>
+                  <input type="date" name="date" id="date" placeholder="choose a date" className="w-full bg-black text-white bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" {...register("date")} onChange={handleOnChange} />
+                </div>
+
+                <div className="flex-1 w-full">
+                  <label htmlFor="time" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white text-black">Chose your Time</label>
+                  <input type="time" name="time" id="date" placeholder="choose a time slot" className="w-full bg-black text-white bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" {...register("time")} onChange={handleOnChange} />
+                </div>
+
+
+
               </div>
 
 
-              <div className="mb-3">
+              <div className="mb-2">
                 <label htmlFor="service" className="form-label">What do you want</label>
-                <select className="form-select bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="service" name="service" {...register("service")} onClick={handleOptions}>
+                <select className="bg-black form-select bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-white dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="service" name="service" {...register("service")} onClick={handleOptions}>
 
                   <option value="Classic Hair Cut">Hair Cut</option>
                   <option value="Beard Styling">Beard</option>
@@ -102,13 +140,13 @@ const BookingForm = () => {
                 </select>
               </div>
 
-              <div>
+              <div className="mb-2">
                 <label htmlFor="price" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white text-black">Price</label>
-                <input type="number" name="price" id="price" value={price} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled  {...register("price")} onChange={handleOnChange} />
+                <input type="number" name="price" id="price" value={price} className="bg-black bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled  {...register("price")} onChange={handleOnChange} />
               </div>
 
-              <div className="">
-                <button className="btn bg-gray-50 border text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white" type="submit" disabled={isSubmitting}>{isSubmitting ? "Loading..." : "Pay Now"}</button>
+              <div className="mt-3">
+                <button className="btn bg-black text-white border" type="submit" disabled={isSubmitting}>{isSubmitting ? "Loading..." : "Pay Now"}</button>
               </div>
               {errors.root && <div className="text-red-500">{errors.root.message}</div>}
             </form>
