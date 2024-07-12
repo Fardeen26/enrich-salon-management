@@ -25,7 +25,7 @@ function Footer() {
         <div className="grid grid-cols-1 justify-between gap-4 md:grid-cols-2">
           <Typography
             variant="h6"
-            noWrap
+            // nowrap="true"
             component="a"
             href="#app-bar-with-responsive-menu"
             sx={{

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { Link as ScrollLink } from 'react-scroll';
 import React, { useRef } from 'react';
@@ -21,18 +22,14 @@ const pages = ['Home', 'About', 'Services', 'Staff', 'Testimonials'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function ResponsiveAppBar() {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [anchorElUser, setAnchorElUser] = useState(null);
   const ref = useRef(null);
-
-  const handleClick = () => {
-    console.log("wchbwci")
-    ref.current?.scrollIntoView({ behavior: 'smooth' });
-  };
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
+  
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -52,8 +49,6 @@ function ResponsiveAppBar() {
         <Toolbar disableGutters>
           <Typography
             variant="h6"
-            noWrap
-            component="a"
             href="#app-bar-with-responsive-menu"
             sx={{
               mr: 2,
@@ -64,7 +59,6 @@ function ResponsiveAppBar() {
             }}
             className='pageLogo text-6xl'
           >
-            {/* Enrich. */}
             <ScrollLink activeClass="active" to='Home' spy={true} smooth={true} offset={-250} duration={600} >Enrich.</ScrollLink>
           </Typography>
 
@@ -102,7 +96,6 @@ function ResponsiveAppBar() {
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">{page}</Typography>
-                  {/* <button onClick={handleClick}>{page}</button> */}
                 </MenuItem>
               ))}
             </Menu>
@@ -110,7 +103,6 @@ function ResponsiveAppBar() {
 
           <Typography
             variant="h5"
-            noWrap
             component="a"
             href="#app-bar-with-responsive-menu"
             sx={{
@@ -132,8 +124,8 @@ function ResponsiveAppBar() {
             sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}
             className="pageBox"
           >
-            {pages.map((page) => (
-              page === 'Home' ? <ScrollLink sx={{ my: 2, color: 'white', display: 'block' }} className='pageButton cursor-pointer uppercase' activeClass="active" to={page} spy={true} smooth={true} offset={-250} duration={600} >{page}</ScrollLink> : <ScrollLink sx={{ my: 2, color: 'white', display: 'block' }} className='pageButton cursor-pointer uppercase' activeClass="active" to={page} spy={true} smooth={true} offset={-100} duration={600} >{page}</ScrollLink>
+            {pages.map((page, idx) => (
+              page === 'Home' ? <ScrollLink key={idx} sx={{ my: 2, color: 'white', display: 'block' }} className='pageButton cursor-pointer uppercase' activeClass="active" to={page} spy={true} smooth={true} offset={-250} duration={600} >{page}</ScrollLink> : <ScrollLink key={idx} sx={{ my: 2, color: 'white', display: 'block' }} className='pageButton cursor-pointer uppercase' activeClass="active" to={page} spy={true} smooth={true} offset={-100} duration={600} >{page}</ScrollLink>
             ))}
           </Box>
 

@@ -1,0 +1,59 @@
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
+
+.time-slots {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+ .time-slot input {
+  display: none;
+}
+
+ .time-slot {
+  padding: 10px 20px; 
+  margin: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  cursor: pointer;
+}
+
+.time-slot:hover {
+  background-color: black;
+  color: white;
+}
+
+.time-slot.selected {
+  background-color: rgb(34,197,94); 
+  color: #fff; 
+  border-color: rgb(34,197,94) !important; 
+  transform: scale(1.1);
+  color: black;
+}
+
+.tran-time {
+  transition: .4s !important;
+}
+
+.margin-left {
+  margin-left: 5px !important;
+}
+
+@media screen and (max-width: 640px) {
+  .margin-left {
+    margin-left: 0px !important;
+  }
+}
+
+@media screen and (max-width: 391px) {
+  .time-slot {
+    padding: 7px 14px; 
+    margin: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    cursor: pointer;
+  }
+}

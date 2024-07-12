@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate  } from 'react-router-dom';
 import { Toaster, toast } from 'sonner';
 import NavBar from './components/NavBar';
 import Main from './components/Main';
@@ -7,7 +7,8 @@ import Footer from './components/Footer';
 
 function App() {
   const location = useLocation();
-  const [notificationShown, setNotificationShown] = useState(false)
+  const navigate = useNavigate();
+  const [notificationShown, setNotificationShown] = useState(false);
 
   useEffect(() => {
     if (location.pathname === '/') {
@@ -19,12 +20,10 @@ function App() {
     const queryParams = new URLSearchParams(location.search);
     const paymentStatus = queryParams.get('paymentStatus');
 
-    // Check local storage for the notification status
     const notificationShownFromStorage = localStorage.getItem('notificationShown');
 
     if (paymentStatus && notificationShownFromStorage !== 'true') {
       if (paymentStatus === 'success') {
-
         toast.success('Payment Successful!', {
           className: 'p-3',
           duration: 3000,
@@ -36,13 +35,15 @@ function App() {
         });
       }
       localStorage.setItem('notificationShown', 'true');
-      setNotificationShown(true); // Update state to prevent multiple notifications in the same session
+      setNotificationShown(true);
+
+      navigate(location.pathname, { replace: true });
     }
 
     return () => {
       localStorage.removeItem('notificationShown');
     };
-  }, [location.search, notificationShown]);
+  }, [location.search, notificationShown, navigate]);
 
   return (
     <>

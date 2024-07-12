@@ -3,27 +3,36 @@ const Schema = mongoose.Schema;
 
 const bookingSchema = new Schema({
     name: {
-        type:String,
+        type: String,
         required: true
     },
     email: {
-        type:  String,
+        type: String,
         required: true
     },
     phone: {
         type: Number,
         required: true
     },
+    service: {
+        type: String,
+        required: true
+    },
     date: {
-        type: Date,
+        type: String,
+        required: true
+    },
+    time: {
+        type: String,
         required: true
     },
     price: {
         type: Number,
         required: true
     },
-    result: {
-        type: Boolean
+    payment: {
+        type: String,
+        required: true
     }
 });
 

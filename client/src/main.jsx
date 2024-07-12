@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import BookingForm from './components/BookingForm.jsx';
@@ -6,9 +6,9 @@ import BookingForm from './components/BookingForm.jsx';
 import {
   createBrowserRouter,
   RouterProvider,
-  useLocation
 } from "react-router-dom";
 import './index.css'
+import Admin from './Admin/Admin.jsx';
 
 const router = createBrowserRouter([
   {
@@ -20,12 +20,15 @@ const router = createBrowserRouter([
     path: "/book",
     element: <BookingForm />,
   },
+  {
+    path: "/admin",
+    element: <Admin />,
+  },
 ]);
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    {/* <App /> */}
     <RouterProvider router={router} />
   </React.StrictMode>,
 )
