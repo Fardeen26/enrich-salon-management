@@ -1,20 +1,41 @@
 import { Typography } from "@material-tailwind/react";
 import { Link as ScrollLink } from 'react-scroll';
+import PinDropIcon from '@mui/icons-material/PinDrop';
+import HistoryToggleOffIcon from '@mui/icons-material/HistoryToggleOff';
+import PhoneIcon from '@mui/icons-material/Phone';
+import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 
 const LINKS = [
   {
-    title: "Product",
-    items: ["Overview", "Features", "Solutions", "Tutorials"],
-  },
-  {
-    title: "Company",
-    items: ["About us", "Careers", "Press", "News"],
-  },
-  {
-    title: "Resource",
-    items: ["Blog", "Newsletter", "Events", "Help center"],
+    title: "USEFUL LINKS",
+    items: ["Services", "Book A Seat", "Privacy Policy", "Contact Us"],
   },
 ];
+
+const Address = [
+  {
+    title: "CONTACT INFO",
+    items: [
+      {
+        icon: <HistoryToggleOffIcon />,
+        address: "Mon-Sat 9:00 AM - 10:PM"
+      },
+      {
+        icon: <PhoneIcon />,
+        address: "+91-6377692757"
+      },
+      {
+        icon: <PinDropIcon />,
+        address: "Mahavir Nagar, Kota"
+      },
+      {
+        icon: <AlternateEmailIcon />,
+        address: "enrichsalon@gmail.com"
+      }],
+  },
+];
+
+
 
 const currentYear = new Date().getFullYear();
 
@@ -25,7 +46,6 @@ function Footer() {
         <div className="grid grid-cols-1 justify-between gap-4 md:grid-cols-2">
           <Typography
             variant="h6"
-            // nowrap="true"
             component="a"
             href="#app-bar-with-responsive-menu"
             sx={{
@@ -52,26 +72,64 @@ function Footer() {
                 </Typography>
                 {items.map((link) => (
                   <li key={link}>
+                    {link === 'Services' ? (
+                      <Typography
+                        as="p"
+                        color="gray"
+                        className="py-1.5 font-normal transition-colors hover:text-blue-gray-900"
+                      >
+                        <ScrollLink sx={{ my: 2, color: 'white', display: 'block' }} className='cursor-pointer' activeClass="active" to='Services' spy={true} smooth={true} offset={-250} duration={600} >{link}</ScrollLink>
+                      </Typography>
+                    ) : (
+                      <Typography
+                        as="a"
+                        href={link === 'Book A Seat' ? 'http://localhost:5173/book' : '#'}
+                        color="gray"
+                        className="py-1.5 font-normal transition-colors hover:text-blue-gray-900"
+                      >
+                        {link}
+                      </Typography>
+
+                    )}
+                  </li>
+
+                ))}
+              </ul>
+            ))}
+
+            {Address.map(({ title, items }) => (
+              <ul key={title}>
+                <Typography
+                  variant="small"
+                  color="blue-gray"
+                  className="mb-3 font-medium opacity-40 whitespace-nowrap"
+                >
+                  {title}
+                </Typography>
+                {items.map((link) => (
+                  <li key={link.address}>
                     <Typography
-                      as="a"
-                      href="#"
+                      as="p"
+                      href='#'
                       color="gray"
-                      className="py-1.5 font-normal transition-colors hover:text-blue-gray-900"
+                      className="py-1.5 font-normal transition-colors hover:text-blue-gray-900 whitespace-nowrap"
                     >
-                      {link}
+                      <span className="opacity-70 text-sm mr-2">{link.icon}</span> {link.address}
                     </Typography>
                   </li>
                 ))}
               </ul>
             ))}
           </div>
+          {/* second */}
+
         </div>
         <div className="mt-12 flex w-full flex-col items-center justify-center border-t border-blue-gray-50 py-4 md:flex-row md:justify-between">
           <Typography
             variant="small"
-            className="mb-4 text-center font-normal text-blue-gray-900 md:mb-0"
+            className="mb-4 text-center font-normal text-blue-gray-900 md:mb-0 opacity-80"
           >
-            &copy; {currentYear} <a href="http://localhost:5173/">Enrich Hair Salon</a>. All
+            &copy; {currentYear} Enrich Hair Salon. All
             Rights Reserved.
           </Typography>
           <div className="flex gap-4 text-blue-gray-900 sm:justify-center">

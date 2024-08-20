@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate  } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Toaster, toast } from 'sonner';
 import NavBar from './components/NavBar';
 import Main from './components/Main';
@@ -43,7 +43,7 @@ function App() {
     return () => {
       localStorage.removeItem('notificationShown');
     };
-  }, [location.search, notificationShown, navigate]);
+  }, [location.search, notificationShown, navigate, location.pathname]);
 
   return (
     <>

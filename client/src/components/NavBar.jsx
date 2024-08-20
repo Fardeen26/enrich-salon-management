@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { Link as ScrollLink } from 'react-scroll';
-import React, { useRef } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -10,12 +9,8 @@ import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
-import BookingForm from './BookingForm';
 import './NavBar.css';
 
 const pages = ['Home', 'About', 'Services', 'Staff', 'Testimonials'];
@@ -24,14 +19,9 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
-  const ref = useRef(null);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
-  };
-  
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
   };
 
   const handleCloseNavMenu = () => {
@@ -117,7 +107,7 @@ function ResponsiveAppBar() {
             }}
             className='pageLogo-sm'
           >
-            Enrich
+            <span className='text-xl'>Enrich</span>
           </Typography>
 
           <Box
@@ -125,12 +115,12 @@ function ResponsiveAppBar() {
             className="pageBox"
           >
             {pages.map((page, idx) => (
-              page === 'Home' ? <ScrollLink key={idx} sx={{ my: 2, color: 'white', display: 'block' }} className='pageButton cursor-pointer uppercase' activeClass="active" to={page} spy={true} smooth={true} offset={-250} duration={600} >{page}</ScrollLink> : <ScrollLink key={idx} sx={{ my: 2, color: 'white', display: 'block' }} className='pageButton cursor-pointer uppercase' activeClass="active" to={page} spy={true} smooth={true} offset={-100} duration={600} >{page}</ScrollLink>
+              page === 'Home' ? <ScrollLink key={idx} sx={{ my: 2, color: 'white', display: 'block' }} className='pageButton cursor-pointer uppercase transition-all hover:scale-125 text-lg' activeClass="active" to={page} spy={true} smooth={true} offset={-250} duration={600} >{page}</ScrollLink> : <ScrollLink key={idx} sx={{ my: 2, color: 'white', display: 'block' }} className='pageButton cursor-pointer transition-all uppercase hover:scale-125 text-lg' activeClass="active" to={page} spy={true} smooth={true} offset={-100} duration={600} >{page}</ScrollLink>
             ))}
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <RouterLink to={`book`}><Button sx={{ color: 'white' }} className='bookButton'>Book Now</Button></RouterLink>
+            <RouterLink to={'book'}><Button sx={{ color: 'white' }} className='bookButton'> <span className='max-sm:text-base'>Book Now</span> </Button></RouterLink>
             <Menu
               sx={{ mt: '35px' }}
               id="menu-appbar"

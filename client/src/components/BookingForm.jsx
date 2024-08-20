@@ -2,10 +2,9 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from 'axios';
 import './bookingForm.css'
-import avatar2 from '../assets/avatar-2.avif'
 
 const BookingForm = () => {
-    const [price, setPrice] = useState(100);
+    const [price, setPrice] = useState(99);
     const [selectedTime, setSelectedTime] = useState('');
     const [formData, setFormData] = useState({
         name: "",
@@ -14,8 +13,14 @@ const BookingForm = () => {
         date: "",
         formTime: "",
         service: "Hair Cut",
-        price: 100
+        price: 99
     });
+    const [allService, setAllService] = useState([
+        {
+            serviceName: 'Classic Hair Cut',
+            price: 99
+        }
+    ]);
 
     const {
         register,
@@ -39,56 +44,73 @@ const BookingForm = () => {
 
     const handleOptions = async (e) => {
         let currVal = e.target.value;
-        let servicedata = await axios.get(import.meta.env.VITE_APP_API_DATA_URL);
-        if (servicedata) {
-            servicedata.data.map((item) => {
-                if (currVal == item.serviceName) {
-                    setPrice(item.price);
-                    setFormData({ ...formData, price: item.price, service: currVal });
-                }
-            })
-        } else {
-            console.log("error occured");
+
+        try {
+            let servicedata = await axios.get(import.meta.env.VITE_DATA_BACKEND_URL + '/service-data');
+            if (servicedata.data) {
+                setAllService(servicedata.data);
+                servicedata.data.map((item) => {
+                    if (currVal == item.serviceName) {
+                        setPrice(item.price);
+                        setFormData({ ...formData, price: item.price, service: currVal });
+                    }
+                })
+            }
+        } catch (error) {
+            console.log("An Error Occured:", error)
         }
     }
 
+    // const handleSendMail = async () => {
+    //     const resSendMail = await axios.get(import.meta.env.DATA_BACKEND_URL+'/sendemail');
+    //     if (resSendMail)
+    //         console.log(resSendMail);
+    // }
 
     const onSubmit = async (data) => {
-        console.log(formData);
-        const orderResponce = await axios.post('https://b96a-103-170-68-147.ngrok-free.app/checkout', formData);
-        if (orderResponce) {
-            let order = orderResponce.data;
-            const options = {
-                key: import.meta.env.RAZORPAY_API_KEY,
-                amount: order.amount.toString(),
-                currency: "INR",
-                name: "Enrich Hair Salon",
-                description: formData.service,
-                image: avatar2,
-                order_id: order.id,
-                callback_url: "https://b96a-103-170-68-147.ngrok-free.app/paymentverification",
-                prefill: {
-                    name: formData.name,
-                    email: formData.email,
-                    contact: formData.phone
-                },
-                notes: {
-                    name: formData.name,
-                    email: formData.email,
-                    phone: formData.phone,
-                    service: formData.service,
-                    date: formData.date,
-                    time: formData.formTime,
-                    price: formData.price
-                },
-                theme: {
-                    "color": "#121212"
-                }
-            };
+        const responce = await axios.post(import.meta.env.VITE_DATA_BACKEND_URL + '/demo-booking', formData);
+        if (responce.data)
+            console.log(responce.data);
 
-            const razor = new window.Razorpay(options);
-            razor.open();
-        }
+        // try {
+        //     const orderResponce = await axios.post(import.meta.env.VITE_DATA_BACKEND_URL + '/checkout', formData);
+        //     if (orderResponce.data) {
+        //         let order = orderResponce.data;
+        //         const options = {
+        //             key: import.meta.env.RAZORPAY_API_KEY,
+        //             amount: order.amount.toString(),
+        //             currency: "INR",
+        //             name: "Enrich Hair Salon",
+        //             description: formData.service,
+        //             image: avatar2,
+        //             order_id: order.id,
+        //             callback_url: "https://b96a-103-170-68-147.ngrok-free.app/paymentverification",
+        //             prefill: {
+        //                 name: formData.name,
+        //                 email: formData.email,
+        //                 contact: formData.phone
+        //             },
+        //             notes: {
+        //                 name: formData.name,
+        //                 email: formData.email,
+        //                 phone: formData.phone,
+        //                 service: formData.service,
+        //                 date: formData.date,
+        //                 time: formData.formTime,
+        //                 price: formData.price
+        //             },
+        //             theme: {
+        //                 "color": "#121212"
+        //             }
+        //         };
+
+
+        //         const razor = new window.Razorpay(options);
+        //         razor.open();
+        //     }
+        // } catch (error) {
+        //     console.log("An Error Occured", error);
+        // }
     };
 
     return (
@@ -107,14 +129,14 @@ const BookingForm = () => {
 
                                 <div className="mb-2 w-full">
                                     <label htmlFor="name" className="block mb-2 text-sm font-medium dark:text-white text-black">Name</label>
-                                    <input type="text" name="name" id="name" className="w-full bg-black border border-gray-300 text-white text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5 dark:placeholder-white" placeholder="Enter your name" required="" {...register("name")} onChange={handleOnChange} />
+                                    <input type="text" name="name" id="name" className="w-full bg-black border border-gray-300 text-white text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5 dark:placeholder-gray" placeholder="Enter your name" required="" {...register("name")} onChange={handleOnChange} />
                                 </div>
 
                                 {/* email */}
 
                                 <div className="mb-2 w-full margin-left">
                                     <label htmlFor="email" className="block mb-2 text-sm font-medium dark:text-white text-black">Email</label>
-                                    <input type="text" name="email" id="email" className="w-full bg-black border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-white dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter your email"  {...register('email', {
+                                    <input type="text" name="email" id="email" className="w-full bg-black border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter your email"  {...register('email', {
                                         required: true,
                                         pattern: {
                                             value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
@@ -136,7 +158,7 @@ const BookingForm = () => {
 
                                 <div className="mb-2 w-full">
                                     <label htmlFor="phone" className="block mb-2 text-sm font-medium dark:text-white text-black">Phone Number</label>
-                                    <input type="tel" name="phone" id="phone" placeholder="Phone number" className="w-full bg-black border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-white dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" {...register("phone", { required: true, minLength: 10, maxLength: 10 })} onChange={handleOnChange} />
+                                    <input type="tel" name="phone" id="phone" placeholder="Phone number" className="w-full bg-black border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" {...register("phone", { required: true, minLength: 10, maxLength: 10 })} onChange={handleOnChange} />
                                     {errors.phone && (
                                         <div className="text-red-500">Phone number should be valid!</div>
                                     )}
@@ -155,7 +177,7 @@ const BookingForm = () => {
                                             name="date"
                                             id="date"
                                             placeholder="choose a date"
-                                            className="w-full bg-black text-white border border-gray-300 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-white dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            className="w-full bg-black text-white border border-gray-300 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                             {...register("date")}
                                             onChange={handleOnChange}
                                         />
@@ -192,25 +214,24 @@ const BookingForm = () => {
 
                             <div className="mb-2">
                                 <label htmlFor="service" className="block mb-2 text-sm font-medium dark:text-white text-black">Choose your service</label>
-                                <select className="w-full bg-black form-select border border-gray-300 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-white dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="service" name="service" {...register("service")} onClick={handleOptions}>
-                                    <option value="Classic Hair Cut">Hair Cut</option>
-                                    <option value="Beard Styling">Beard</option>
-                                    <option value="Hair Color">Hair Color</option>
-                                    <option value="Ceretine">Ceretine</option>
-                                    <option value="Massage">Massage</option>
-                                    <option value="Make-Up">Make-Up</option>
+                                <select className="w-full bg-black form-select border border-gray-300 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-white dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="service" name="service" {...register("service")} onClick={handleOptions} placeholder="click here to choose service">
+                                    {
+                                        allService.map((item, idx) => (
+                                            <option key={idx} value={item.serviceName}>{item.serviceName}</option>
+                                        ))
+                                    }
                                 </select>
                             </div>
-                            
+
                             {/* price */}
 
                             <div className="mb-2">
-                                <label htmlFor="price" className="block mb-2 text-sm font-medium dark:text-white text-black">Price</label>
-                                <input type="number" name="price" id="price" value={price} className="w-full bg-black border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white" disabled  {...register("price")} onChange={handleOnChange} />
+                                <label htmlFor="price" className="block mb-2 text-xs font-medium dark:text-white text-black">Price</label>
+                                <input type="number" name="price" id="price" value={price} className="w-full bg-black border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white hover:cursor-not-allowed" disabled  {...register("price")} onChange={handleOnChange} />
                             </div>
 
                             <div className="mt-4 w-full">
-                                <button className="btn bg-green-500 font-semibold text-black border w-full tran-time" type="submit" disabled={isSubmitting}>{isSubmitting ? "Loading..." : "Pay Now"}</button>
+                                <button className="btn bg-blue-500 font-semibold text-white border w-full tran-time" type="submit" disabled={isSubmitting}>{isSubmitting ? "Loading..." : "Pay Now"}</button>
                             </div>
                             {errors.root && <div className="text-red-500">{errors.root.message}</div>}
                         </form>
@@ -222,4 +243,3 @@ const BookingForm = () => {
 }
 
 export default BookingForm;
-

@@ -1,6 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap');
+
 .src-img {
     height: 500px !important;
     width: 379.8px !important;
 }
 
-  
+.service-image:hover .src-img {
+    filter: brightness(.4) !important;
+    transition: .5s;
+}
+
+.service-image:hover .service-heading {
+    top: 200px !important;
+    z-index: 1;
+}
+
+.service-heading {
+    position: absolute;
+    white-space: nowrap;
+    top: 550px;
+    transition: .5s;
+    filter: brightness(1) !important;
+    z-index: -1;
+    text-align: center;
+    font-family: "Cinzel", serif !important;
+}

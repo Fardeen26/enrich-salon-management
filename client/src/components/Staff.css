@@ -4,10 +4,8 @@
     font-family: "Cinzel", serif;
 }
 
-
 @media screen and (max-width: 440px) {
     .staff-detail {
         padding: 8px 10px 8px 10px !important;
     }
 }
-

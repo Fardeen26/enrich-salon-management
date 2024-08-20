@@ -1,4 +1,3 @@
-import React from 'react';
 import Slider from "react-slick";
 import Heading from './utils-component/Heading';
 import "slick-carousel/slick/slick.css";
@@ -13,6 +12,7 @@ import avatar6 from '../assets/avatar-6.avif'
 import avatar7 from '../assets/avatar-7.avif'
 
 function SampleNextArrow(props) {
+    // eslint-disable-next-line react/prop-types
     const { className, style, onClick } = props;
     return (
         <div
@@ -24,6 +24,7 @@ function SampleNextArrow(props) {
 }
 
 function SamplePrevArrow(props) {
+    // eslint-disable-next-line react/prop-types
     const { className, style, onClick } = props;
     return (
         <div

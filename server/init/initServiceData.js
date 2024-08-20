@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 const serviceData = require('./serviceData')
 const Service = require('../models/service')
-const mongo_url = 'mongodb://127.0.0.1:27017/enrich-hair-salon';
+const mongo_url = process.env.LOCAL_MONGO_URL;
 
 main().then(() => {
-    console.log("init Connected to MongoDB"); 
+  console.log("Connected to MongoDB");
 }).catch(err => console.log(err));
 
 async function main() {
@@ -13,9 +13,9 @@ async function main() {
 }
 
 const initDB = async () => {
-    await Service.deleteMany({});
-    await Service.insertMany(serviceData.data);
-    console.log("Data was initialized");
+  await Service.deleteMany({});
+  await Service.insertMany(serviceData.data);
+  console.log("Data was initialized");
 }
- 
+
 initDB();

@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import "./custom.slider.css";
 
+// eslint-disable-next-line react/prop-types
 function CustomCarousel({ children }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [slideDone, setSlideDone] = useState(true);
@@ -21,6 +22,7 @@ function CustomCarousel({ children }) {
 
   const slideNext = () => {
     setActiveIndex((val) => {
+      // eslint-disable-next-line react/prop-types
       if (val >= children.length - 1) {
         return 0;
       } else {
@@ -32,6 +34,7 @@ function CustomCarousel({ children }) {
   const slidePrev = () => {
     setActiveIndex((val) => {
       if (val <= 0) {
+        // eslint-disable-next-line react/prop-types
         return children.length - 1;
       } else {
         return val - 1;
@@ -58,6 +61,7 @@ function CustomCarousel({ children }) {
       onMouseEnter={AutoPlayStop}
       onMouseLeave={AutoPlayStart}
     >
+      {/* eslint-disable-next-line react/prop-types */}
       {children.map((item, index) => {
         return (
           <div
@@ -70,6 +74,7 @@ function CustomCarousel({ children }) {
       })}
 
       <div className="container__slider__links">
+        {/* eslint-disable-next-line react/prop-types */}
         {children.map((item, index) => {
           return (
             <button
