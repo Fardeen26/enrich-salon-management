@@ -58,7 +58,7 @@ const Home = () => {
     useEffect(() => { // import.meta.env.DATA_BACKEND_URL + 
         const bookingCountData = async () => {
             try {
-                const responce = await axios.get(import.meta.env.VITE_ADMIN_BACKEND_URL + '/booking-count');
+                const responce = await axios.get('/api/admin/booking-count');
                 if (responce.data)
                     setBookingCount(responce.data)
             } catch (error) {
@@ -68,7 +68,7 @@ const Home = () => {
 
         const totalIncome = async () => {
             try {
-                const responce = await axios.get(import.meta.env.VITE_ADMIN_BACKEND_URL + '/total-revenue');
+                const responce = await axios.get('/api/admin/total-revenue');
                 if (responce.data)
                     setTotalIncome(responce.data)
             } catch (error) {
@@ -78,7 +78,7 @@ const Home = () => {
 
         const totalServices = async () => {
             try {
-                const responce = await axios.get(import.meta.env.VITE_ADMIN_BACKEND_URL + '/total-services');
+                const responce = await axios.get('/api/admin/total-services');
                 if (responce.data)
                     setTotalServices(responce.data);
             } catch (error) {
@@ -88,7 +88,7 @@ const Home = () => {
 
         const totalCustomer = async () => {
             try {
-                const responce = await axios.get(import.meta.env.VITE_ADMIN_BACKEND_URL + '/total-customers');
+                const responce = await axios.get('/api/admin/total-customers');
                 if (responce.data)
                     setTotalCustomer(responce.data);
             } catch (error) {
@@ -98,7 +98,7 @@ const Home = () => {
 
         const recentBookings = async () => {
             try {
-                const responce = await axios.get(import.meta.env.VITE_ADMIN_BACKEND_URL + '/recent-bookings');
+                const responce = await axios.get('/api/admin/recent-bookings');
                 if (responce.data) {
                     const formattedBookings = responce.data.map((recentBookings) => ({
                         ...recentBookings,
@@ -114,7 +114,7 @@ const Home = () => {
 
         const servicesCount = async () => {
             try {
-                const responce = await axios.get(import.meta.env.VITE_ADMIN_BACKEND_URL + '/services-count')
+                const responce = await axios.get('/api/admin/services-count')
                 if (responce.data) {
                     const data = responce.data;
 
@@ -146,7 +146,7 @@ const Home = () => {
 
         const getMonthlyBookings = async () => {
             try {
-                const responce = await axios.get(import.meta.env.VITE_ADMIN_BACKEND_URL + '/monthly-bookings');
+                const responce = await axios.get('/api/admin/monthly-bookings');
                 if (responce.data) {
                     let tempArray = [];
                     let tempArray2 = [];

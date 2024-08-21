@@ -22,7 +22,7 @@ const AdminRoute = () => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const response = await axios.get(import.meta.env.VITE_ADMIN_BACKEND_URL + '/check-auth');
+        const response = await axios.get('/api/admin/check-auth');
         setIsLoggedIn(response.data.isLoggedIn);
       } catch (err) {
         console.error('Error checking authentication status', err);

@@ -46,7 +46,7 @@ const BookingForm = () => {
         let currVal = e.target.value;
 
         try {
-            let servicedata = await axios.get(import.meta.env.VITE_DATA_BACKEND_URL + '/service-data');
+            let servicedata = await axios.get('/api/service-data');
             if (servicedata.data) {
                 setAllService(servicedata.data);
                 servicedata.data.map((item) => {
@@ -68,7 +68,7 @@ const BookingForm = () => {
     // }
 
     const onSubmit = async () => {
-        const responce = await axios.post(import.meta.env.VITE_DATA_BACKEND_URL + '/demo-booking', formData);
+        const responce = await axios.post('/api/demo-booking', formData);
         if (responce.data)
             console.log(responce.data);
 
@@ -231,7 +231,7 @@ const BookingForm = () => {
                             </div>
 
                             <div className="mt-4 w-full">
-                                <button className="btn bg-blue-500 font-semibold text-white border w-full tran-time" type="submit" disabled={isSubmitting}>{isSubmitting ? "Loading..." : "Pay Now"}</button>
+                                <button className="btn bg-blue-500 font-semibold text-white border w-full pay-btn" type="submit" disabled={isSubmitting}>{isSubmitting ? "Loading..." : "Pay Now"}</button>
                             </div>
                             {errors.root && <div className="text-red-500">{errors.root.message}</div>}
                         </form>

@@ -11,7 +11,7 @@ const EditServiceForm = () => {
 
     useEffect(() => {
         try {
-            axios.get(import.meta.env.VITE_ADMIN_BACKEND_URL + `/service-formdata/${id}`).then(res => {
+            axios.get(`/api/admin/service-formdata/${id}`).then(res => {
                 setServiceName(res.data.serviceName);
                 setServicePrice(res.data.price);
             })
@@ -24,7 +24,7 @@ const EditServiceForm = () => {
         e.preventDefault();
         setIsLoading(true)
         try {
-            const responce = await axios.post(import.meta.env.VITE_ADMIN_BACKEND_URL + `/edit-service/${id}`, { serviceName, servicePrice });
+            const responce = await axios.post(`/api/admin/edit-service/${id}`, { serviceName, servicePrice });
             if (responce.data.success) {
                 navigate('/admin/dashboard/services');
             }

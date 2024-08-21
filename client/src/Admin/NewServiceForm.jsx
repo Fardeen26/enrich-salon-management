@@ -12,7 +12,7 @@ const NewServiceForm = () => {
         e.preventDefault();
         setIsLoading(true);
         try {
-            const responce = await axios.post(import.meta.env.VITE_ADMIN_BACKEND_URL + '/create-service', { serviceName, price });
+            const responce = await axios.post('/api/admin/create-service', { serviceName, price });
             if (responce.data)
                 navigate('/admin/dashboard/services', { success: true })
         } catch (error) {

@@ -44,7 +44,7 @@ const NavBar = ({ windowWidth, isMenuOpen, handleOpenUserMenu, handleCloseUserMe
     useEffect(() => {
         const recentBookings = async () => {
             try {
-                const responce = await axios.get(import.meta.env.VITE_ADMIN_BACKEND_URL + '/recent-bookings');
+                const responce = await axios.get('/api/admin/recent-bookings');
                 if (responce.data) {
                     setNotifications(responce.data);
                 }
@@ -55,7 +55,7 @@ const NavBar = ({ windowWidth, isMenuOpen, handleOpenUserMenu, handleCloseUserMe
 
         const fetchProfileUrl = async () => {
             try {
-                const responce = await axios.get(import.meta.env.VITE_ADMIN_BACKEND_URL + '/profile-url');
+                const responce = await axios.get('/api/admin/profile-url');
                 if (responce.data) {
                     setprofileUrl(responce.data.profilePic)
                 }

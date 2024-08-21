@@ -34,10 +34,14 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .tran-time {
-  transition: .4s !important;
+  transition: .2s !important;
 }
 
-.tran-time:hover {
+.pay-btn {
+  transition: .3s;
+}
+
+.pay-btn:hover {
   color: black !important;
 }
 
