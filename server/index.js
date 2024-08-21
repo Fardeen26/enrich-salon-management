@@ -43,12 +43,11 @@ app.use(session({
   },
 }))
 
-app.use('/service-data', dataRouter);
-app.use('/', paymentRouter);
+app.use('/api', dataRouter);
+app.use('/api', paymentRouter);
 app.use('/api/admin', adminRouter);
 
 
 app.listen(3000, () => {
   console.log(`Server is running on port ${port}`);
-  console.log('Ngrok URL:', 'https://4d0d-103-167-194-225.ngrok-free.app');
 });
