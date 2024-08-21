@@ -37,6 +37,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   transition: .4s !important;
 }
 
+.tran-time:hover {
+  color: black !important;
+}
+
 .margin-left {
   margin-left: 5px !important;
 }

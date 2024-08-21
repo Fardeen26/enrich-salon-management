@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from 'axios';
 import './bookingForm.css'
@@ -67,7 +67,7 @@ const BookingForm = () => {
     //         console.log(resSendMail);
     // }
 
-    const onSubmit = async (data) => {
+    const onSubmit = async () => {
         const responce = await axios.post(import.meta.env.VITE_DATA_BACKEND_URL + '/demo-booking', formData);
         if (responce.data)
             console.log(responce.data);
