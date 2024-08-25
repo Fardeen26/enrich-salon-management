@@ -242,7 +242,7 @@ const Home = () => {
                 </div>
 
                 <div className="w-[79vw] max-sm:w-[96vw] max-lg:w-[96vw] border rounded-2xl p-3 mt-5 max-sm:mt-3 shadow">
-                    <h2 className='text-xl font-semibold'>Each Month Bookings</h2>
+                    <h2 className='text-xl font-semibold'>Monthly Bookings</h2>
                     <div className="mt-2">
                         <LineChart
                             xAxis={[{ data: lineXAxisData }]}

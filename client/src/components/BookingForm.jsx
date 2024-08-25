@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import avatar2 from '../assets/avatar-1.avif'
 import axios from 'axios';
 import './bookingForm.css'
 
@@ -62,52 +61,62 @@ const BookingForm = () => {
         }
     }
 
+    // const handleSendMail = async () => {
+    //     const resSendMail = await axios.get(import.meta.env.DATA_BACKEND_URL+'/sendemail');
+    //     if (resSendMail)
+    //         console.log(resSendMail);
+    // }
+
     const onSubmit = async () => {
-        try {
-            const orderResponce = await axios.post('/api/checkout', formData);
-            if (orderResponce.data) {
-                let order = orderResponce.data;
-                const options = {
-                    key: import.meta.env.RAZORPAY_API_KEY,
-                    amount: order.amount.toString(),
-                    currency: "INR",
-                    name: "Enrich Hair Salon",
-                    description: formData.service,
-                    image: avatar2,
-                    order_id: order.id,
-                    callback_url: "/api/paymentverification",
-                    prefill: {
-                        name: formData.name,
-                        email: formData.email,
-                        contact: formData.phone
-                    },
-                    notes: {
-                        name: formData.name,
-                        email: formData.email,
-                        phone: formData.phone,
-                        service: formData.service,
-                        date: formData.date,
-                        time: formData.formTime,
-                        price: formData.price
-                    },
-                    theme: {
-                        "color": "#121212"
-                    }
-                };
+        const responce = await axios.post('/api/demo-booking', formData);
+        if (responce.data)
+            console.log(responce.data);
+
+        // try {
+        //     const orderResponce = await axios.post(import.meta.env.VITE_DATA_BACKEND_URL + '/checkout', formData);
+        //     if (orderResponce.data) {
+        //         let order = orderResponce.data;
+        //         const options = {
+        //             key: import.meta.env.RAZORPAY_API_KEY,
+        //             amount: order.amount.toString(),
+        //             currency: "INR",
+        //             name: "Enrich Hair Salon",
+        //             description: formData.service,
+        //             image: avatar2,
+        //             order_id: order.id,
+        //             callback_url: "https://b96a-103-170-68-147.ngrok-free.app/paymentverification",
+        //             prefill: {
+        //                 name: formData.name,
+        //                 email: formData.email,
+        //                 contact: formData.phone
+        //             },
+        //             notes: {
+        //                 name: formData.name,
+        //                 email: formData.email,
+        //                 phone: formData.phone,
+        //                 service: formData.service,
+        //                 date: formData.date,
+        //                 time: formData.formTime,
+        //                 price: formData.price
+        //             },
+        //             theme: {
+        //                 "color": "#121212"
+        //             }
+        //         };
 
 
-                const razor = new window.Razorpay(options);
-                razor.open();
-            }
-        } catch (error) {
-            console.log("An Error Occured", error);
-        }
+        //         const razor = new window.Razorpay(options);
+        //         razor.open();
+        //     }
+        // } catch (error) {
+        //     console.log("An Error Occured", error);
+        // }
     };
 
     return (
-        <section className="bg-black dark:bg-black text-black max-sm:h-[120vh]">
-            <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-                <div className="w-full lg:max-w-lg bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+        <section className="bg-black dark:bg-black text-black max-sm:h-[125vh]">
+            <div className="flex flex-col items-center justify-center max-sm:px-3 px-6 py-8 mx-auto md:h-screen lg:py-0">
+                <div className="w-full lg:max-w-lg bg-white rounded-3xl shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
                     <div className="p-6 space-y-4 md:space-y-6 sm:p-8 ">
                         <h1 className="text-xl font-bold leading-tight tracking-tigh md:text-2xl dark:text-white text-black">
                             Book Your Seat
@@ -120,14 +129,14 @@ const BookingForm = () => {
 
                                 <div className="mb-2 w-full">
                                     <label htmlFor="name" className="block mb-2 text-sm font-medium dark:text-white text-black">Name</label>
-                                    <input type="text" name="name" id="name" className="w-full bg-black border border-gray-300 text-white text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5 dark:placeholder-gray" placeholder="Enter your name" required="" {...register("name")} onChange={handleOnChange} />
+                                    <input type="text" name="name" id="name" className="font-['Cambria'] w-full bg-black border border-gray-300 text-white text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5 placeholder:text-white  focus:placeholder:text-gray-400" placeholder="Enter your name" required="" {...register("name")} onChange={handleOnChange} />
                                 </div>
 
                                 {/* email */}
 
                                 <div className="mb-2 w-full margin-left">
                                     <label htmlFor="email" className="block mb-2 text-sm font-medium dark:text-white text-black">Email</label>
-                                    <input type="text" name="email" id="email" className="w-full bg-black border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter your email"  {...register('email', {
+                                    <input type="text" name="email" id="email" className="font-['Cambria'] w-full bg-black border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 placeholder:text-white focus:placeholder:text-gray-400" placeholder="Enter your email"  {...register('email', {
                                         required: true,
                                         pattern: {
                                             value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
@@ -149,7 +158,7 @@ const BookingForm = () => {
 
                                 <div className="mb-2 w-full">
                                     <label htmlFor="phone" className="block mb-2 text-sm font-medium dark:text-white text-black">Phone Number</label>
-                                    <input type="tel" name="phone" id="phone" placeholder="Phone number" className="w-full bg-black border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" {...register("phone", { required: true, minLength: 10, maxLength: 10 })} onChange={handleOnChange} />
+                                    <input type="tel" name="phone" id="phone" placeholder="Phone number" className="font-['Cambria'] w-full bg-black border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 placeholder:text-white focus:placeholder:text-gray-400" {...register("phone", { required: true, minLength: 10, maxLength: 10 })} onChange={handleOnChange} />
                                     {errors.phone && (
                                         <div className="text-red-500">Phone number should be valid!</div>
                                     )}
@@ -168,7 +177,7 @@ const BookingForm = () => {
                                             name="date"
                                             id="date"
                                             placeholder="choose a date"
-                                            className="w-full bg-black text-white border border-gray-300 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            className="font-['Cambria'] w-full bg-black text-white border border-gray-300 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray dark:focus:ring-blue-500 dark:focus:border-blue-500 focus:placeholder:text-gray-400"
                                             {...register("date")}
                                             onChange={handleOnChange}
                                         />
@@ -185,7 +194,7 @@ const BookingForm = () => {
                                 </label>
                                 <div className="time-slots w-full">
                                     {timeSlots.map((time, index) => (
-                                        <label key={index} className={`time-slot ${selectedTime === time ? 'selected' : ''} text-sm max-sm:text-xs tran-time`}>
+                                        <label key={index} className={`font-['Cambria'] time-slot ${selectedTime === time ? 'selected' : ''} text-sm max-sm:text-xs tran-time`}>
                                             <input
                                                 type="radio"
                                                 name="time"
@@ -205,7 +214,7 @@ const BookingForm = () => {
 
                             <div className="mb-2">
                                 <label htmlFor="service" className="block mb-2 text-sm font-medium dark:text-white text-black">Choose your service</label>
-                                <select className="w-full bg-black form-select border border-gray-300 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-white dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="service" name="service" {...register("service")} onClick={handleOptions} placeholder="click here to choose service">
+                                <select className="font-['Cambria'] w-full bg-black form-select border border-gray-300 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5 text-white dark:bg-gray-700 dark:border-gray-600 placeholder:text-white appearance-none" id="service" name="service" {...register("service")} onClick={handleOptions} placeholder="click here to choose service">
                                     {
                                         allService.map((item, idx) => (
                                             <option key={idx} value={item.serviceName}>{item.serviceName}</option>
@@ -218,7 +227,7 @@ const BookingForm = () => {
 
                             <div className="mb-2">
                                 <label htmlFor="price" className="block mb-2 text-xs font-medium dark:text-white text-black">Price</label>
-                                <input type="number" name="price" id="price" value={price} className="w-full bg-black border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white hover:cursor-not-allowed" disabled  {...register("price")} onChange={handleOnChange} />
+                                <input type="number" name="price" id="price" value={price} className="font-['Cambria'] w-full bg-black border border-gray-300 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5 dark:bg-gray-700 dark:border-gray-600 text-white dark:text-white hover:cursor-not-allowed" disabled  {...register("price")} onChange={handleOnChange} />
                             </div>
 
                             <div className="mt-4 w-full">

@@ -18,7 +18,7 @@ const Address = [
     items: [
       {
         icon: <HistoryToggleOffIcon />,
-        address: "Mon-Sat 9:00 AM - 10:PM"
+        address: "Mon-Sat 9:00 AM - 10:00 PM"
       },
       {
         icon: <PhoneIcon />,
@@ -26,7 +26,7 @@ const Address = [
       },
       {
         icon: <PinDropIcon />,
-        address: "Mahavir Nagar, Kota"
+        address: "Mahavir Nagar III, Kota"
       },
       {
         icon: <AlternateEmailIcon />,
@@ -114,7 +114,7 @@ function Footer() {
                       color="gray"
                       className="py-1.5 font-normal transition-colors hover:text-blue-gray-900 whitespace-nowrap"
                     >
-                      <span className="opacity-70 text-sm mr-2">{link.icon}</span> {link.address}
+                      <span className="opacity-60 text-xs mr-2">{link.icon}</span> {link.address}
                     </Typography>
                   </li>
                 ))}

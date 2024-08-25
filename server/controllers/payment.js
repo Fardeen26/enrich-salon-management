@@ -137,13 +137,13 @@ const { razorpayInstance } = require('../utils/razorpayInstance.js');
 const crypto = require("crypto");
 const { sendMailToCustomer, sendMailToAdmin } = require('../utils/NodeMailer.js');
 
-
+// Map to store payments temporarily
 const payments = new Map();
 
 module.exports.paymentCheckout = async (req, res) => {
     const { price } = req.body;
     const options = {
-        amount: price * 100,
+        amount: price * 100, // Convert price to paise (smallest currency unit)
         currency: "INR",
     };
 
@@ -171,7 +171,7 @@ module.exports.paymentVerification = async (req, res) => {
         service: payment.notes.service,
         date: payment.notes.date,
         time: payment.notes.time,
-        price: payment.amount / 100,
+        price: payment.amount / 100, // Convert amount back to currency unit
         payment_id: payment.id,
         payment: payment.status
     };

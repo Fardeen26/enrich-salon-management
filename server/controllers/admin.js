@@ -309,7 +309,7 @@ module.exports.login = (req, res) => {
         return res.status(200).json({ success: true });
     }
 
-    res.status(401).json({ success: false });
+    res.json({ success: false, message: "Invalid Crediantls" });
 };
 
 module.exports.checkAuth = (req, res) => {
@@ -329,7 +329,7 @@ module.exports.checkAuthMiddleware = (req, res, next) => {
         return next();
     }
 
-    res.status(401).json({ success: false, error: 'Unauthorized' });
+    res.json({ success: false, error: 'Unauthorized' });
 };
 
 // Booking Count

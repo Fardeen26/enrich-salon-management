@@ -16,7 +16,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-const profileLinks = ['/admin/dashboard/profile', '/admin/dashboard/profile', '/admin/dashboard/', '/admin/login'];
+const profileLinks = ['/admin/dashboard/account', '/admin/dashboard/account', '/admin/dashboard/', '/admin/login'];
 
 
 // eslint-disable-next-line react/prop-types
@@ -151,7 +151,7 @@ const NavBar = ({ windowWidth, isMenuOpen, handleOpenUserMenu, handleCloseUserMe
                             >
                                 {settings.map((setting, idx) => (
                                     <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                        <Typography textAlign="center"><Link to={profileLinks[idx]} >{setting}</Link> </Typography>
+                                        <Typography textAlign="center"><Link to={profileLinks[idx]}>{setting}</Link> </Typography>
                                     </MenuItem>
                                 ))}
                             </Menu>

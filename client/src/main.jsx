@@ -4,6 +4,7 @@ import App from './App.jsx';
 import BookingForm from './components/BookingForm.jsx';
 import AdminLogin from './Admin/AdminLogin.jsx';
 import AdminDashboard from './Admin/AdminDashboard.jsx';
+import Loader from './Admin/Loader.jsx';
 
 import {
   createBrowserRouter,
@@ -34,7 +35,7 @@ const AdminRoute = () => {
     checkAuth();
   }, []);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <Loader />;
 
   return isLoggedIn ? <AdminDashboard /> : <Navigate to="/admin/login" />;
 };

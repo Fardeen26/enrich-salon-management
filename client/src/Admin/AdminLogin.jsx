@@ -17,11 +17,10 @@ const AdminLogin = () => {
             if (response.data.success) {
                 navigate('/admin/dashboard');
             } else {
-                setError('Invalid credentials');
+                setError(response.data.message);
             }
         } catch (err) {
-            setError(err.message);
-            console.log("An Error Occured", err)
+            console.log("An Error Occured")
         } finally {
             setIsLoading(false);
         }

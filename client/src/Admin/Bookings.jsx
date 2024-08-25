@@ -37,9 +37,9 @@ const Bookings = () => {
     }, []);
 
     return (
-        <div className="content h-full px-3 mt-2 font-semibold py-5 mb-5">
+        <div className="content h-full px-3 font-semibold pt-3">
             <h1 className='mb-3 text-2xl'>All Bookings</h1>
-            <Box sx={{ height: 600, width: '100%' }}>
+            <Box sx={{ height: 560, width: '100%' }}>
                 <DataGrid
                     rows={bookings}
                     columns={columns}
