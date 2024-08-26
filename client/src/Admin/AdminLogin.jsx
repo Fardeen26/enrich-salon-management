@@ -1,12 +1,15 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 const AdminLogin = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [isPasswordHidden, setIsPasswordHidden] = useState(true)
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -37,7 +40,10 @@ const AdminLogin = () => {
                 </div>
                 <div className='py-2'>
                     <label htmlFor='password' className='block mb-2 text-sm font-medium dark:text-white text-black'>Password</label>
-                    <input type="password" name='password' value={password} onChange={(e) => setPassword(e.target.value)} className='bg-black text-white p-2 w-72 rounded' />
+                    <div className="relative">
+                        <input type={`${isPasswordHidden ? 'password' : 'text'}`} name='password' value={password} onChange={(e) => setPassword(e.target.value)} className='bg-black text-white p-2 w-72 rounded' />
+                        <span className='absolute text-white right-3 top-2' onClick={() => setIsPasswordHidden(!isPasswordHidden)}>{isPasswordHidden ? <VisibilityIcon sx={{ fontSize: '18px' }} /> : <VisibilityOffIcon sx={{ fontSize: '18px' }} />}</span>
+                    </div>
                 </div>
                 <button type="submit" className='bg-blue-500 text-white p-2 mt-3 rounded w-full'>{isLoading ? 'Loading...' : 'Login'}</button>
 

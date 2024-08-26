@@ -34,7 +34,8 @@ function ResponsiveAppBar() {
 
   return (
 
-    <AppBar position="sticky" className='navContainer ps-16 pr-16 max-sm:ps-0 max-sm:pr-0 max-lg:ps-6 max-lg:pr-6 Home'>
+    // <div className="max-sm:pl-0 max-sm:pr-0 pl-[4px] pr-[4px] top-0">
+    <AppBar position="sticky" className='navContainer ps-16 pr-16 max-sm:ps-0 max-sm:pr-0 max-lg:ps-6 max-lg:pr-6 Home max-sm:ml-0 max-sm:mr-0 w-auto ml-[4px] mr-[4px] '>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
@@ -85,7 +86,9 @@ function ResponsiveAppBar() {
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                  <Typography textAlign="center">
+                    <ScrollLink activeClass="active" to={page} spy={true} smooth={true} offset={-250} duration={600} >{page}</ScrollLink>
+                  </Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -120,7 +123,7 @@ function ResponsiveAppBar() {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <RouterLink to={'book'}><Button sx={{ color: 'white' }} className='bookButton'> <span className='max-sm:text-base'>Book Now</span> </Button></RouterLink>
+            <RouterLink to={'book'}><Button sx={{ color: 'white' }} className='bookButton'> <span className='max-sm:text-sm'>Book Now</span> </Button></RouterLink>
             <Menu
               sx={{ mt: '35px' }}
               id="menu-appbar"
@@ -147,6 +150,7 @@ function ResponsiveAppBar() {
         </Toolbar>
       </Container>
     </AppBar>
+    // </div>
   );
 }
 export default ResponsiveAppBar;

@@ -1,4 +1,3 @@
-import React from 'react';
 import './HeroImage.css';
 import { Link as RouterLink } from 'react-router-dom';
 import salonLady from "../../assets/salon-lady.jpg"
@@ -15,7 +14,7 @@ function HeroImage() {
 
                 <h2 className="hero-desc mt-3 max-sm:text-xs max-lg:text-sm">
                     CHANGE YOUR LOOK WITH OUR TALENTED STYLISTS.
-                </h2> 
+                </h2>
 
                 <div className="hero-btn-container mt-4">
                     {/* <button className='hero-btn text-white'>BOOK A SEAT</button> */}
@@ -23,11 +22,11 @@ function HeroImage() {
                 </div>
 
             </div>
-             <div className="image-container">
-                <img src={salonLady} alt="" />
-             </div>
+            <div className="image-container max-sm:pl-0 max-sm:pr-0 pr-[4px] pl-[4px]">
+                <img src={salonLady} alt="" className='max-sm:rounded-none rounded-b-[30px]' />
+            </div>
         </>
     )
-};
+}
 
 export default HeroImage;

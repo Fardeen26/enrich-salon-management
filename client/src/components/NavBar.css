@@ -3,6 +3,10 @@
 
 .navContainer {
     background-color: black !important;
+    margin-left: 4px;
+    margin-right: 4px;
+    /* width: 98.40vw !important; */
+    width: auto !important;
 }
 
 .pageBox {

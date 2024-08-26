@@ -41,16 +41,19 @@ function App() {
     }
 
     return () => {
-      localStorage.removeItem('notificationShown');
+      setTimeout(() => {
+        localStorage.removeItem('notificationShown');
+      }, 2000)
+
     };
   }, [location.search, notificationShown, navigate, location.pathname]);
 
   return (
     <>
+      <Toaster richColors position="top-center" visibleToasts={1} />
       <NavBar />
       <Main />
       <Footer />
-      <Toaster richColors position="top-center" visibleToasts={1} />
     </>
   );
 }

@@ -1,4 +1,4 @@
-import Heading from './utils-component/Heading';
+import Heading from './Utils-Component/Heading';
 import styler_1 from '../assets/Styler-01.jpg'
 import styler_2 from '../assets/Styler-02.jpg'
 import styler_3 from '../assets/Styler-03.jpg'

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from 'axios';
+import avatar2 from '../assets/avatar-2.avif'
 import './bookingForm.css'
 
 const BookingForm = () => {
@@ -68,49 +69,49 @@ const BookingForm = () => {
     // }
 
     const onSubmit = async () => {
-        const responce = await axios.post('/api/demo-booking', formData);
-        if (responce.data)
-            console.log(responce.data);
+        // const responce = await axios.post('/api/demo-booking', formData);
+        // if (responce.data)
+        //     console.log(responce.data);
 
-        // try {
-        //     const orderResponce = await axios.post(import.meta.env.VITE_DATA_BACKEND_URL + '/checkout', formData);
-        //     if (orderResponce.data) {
-        //         let order = orderResponce.data;
-        //         const options = {
-        //             key: import.meta.env.RAZORPAY_API_KEY,
-        //             amount: order.amount.toString(),
-        //             currency: "INR",
-        //             name: "Enrich Hair Salon",
-        //             description: formData.service,
-        //             image: avatar2,
-        //             order_id: order.id,
-        //             callback_url: "https://b96a-103-170-68-147.ngrok-free.app/paymentverification",
-        //             prefill: {
-        //                 name: formData.name,
-        //                 email: formData.email,
-        //                 contact: formData.phone
-        //             },
-        //             notes: {
-        //                 name: formData.name,
-        //                 email: formData.email,
-        //                 phone: formData.phone,
-        //                 service: formData.service,
-        //                 date: formData.date,
-        //                 time: formData.formTime,
-        //                 price: formData.price
-        //             },
-        //             theme: {
-        //                 "color": "#121212"
-        //             }
-        //         };
+        try {
+            const orderResponce = await axios.post('/api/checkout', formData);
+            if (orderResponce.data) {
+                let order = orderResponce.data;
+                const options = {
+                    key: 'rzp_test_pjurMf4Z5QVWFz',
+                    amount: order.amount.toString(),
+                    currency: "INR",
+                    name: "Enrich Hair Salon",
+                    description: formData.service,
+                    image: avatar2,
+                    order_id: order.id,
+                    callback_url: "/api/paymentverification",
+                    prefill: {
+                        name: formData.name,
+                        email: formData.email,
+                        contact: formData.phone
+                    },
+                    notes: {
+                        name: formData.name,
+                        email: formData.email,
+                        phone: formData.phone,
+                        service: formData.service,
+                        date: formData.date,
+                        time: formData.formTime,
+                        price: formData.price
+                    },
+                    theme: {
+                        "color": "#121212"
+                    }
+                };
 
 
-        //         const razor = new window.Razorpay(options);
-        //         razor.open();
-        //     }
-        // } catch (error) {
-        //     console.log("An Error Occured", error);
-        // }
+                const razor = new window.Razorpay(options);
+                razor.open();
+            }
+        } catch (error) {
+            console.log("An Error Occured on real payment", error);
+        }
     };
 
     return (

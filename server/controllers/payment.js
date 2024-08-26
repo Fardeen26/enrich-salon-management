@@ -1,112 +1,112 @@
-// const Booking = require('../models/Booking');
-// const { razorpayInstance } = require('../utils/razorpayInstance.js');
-// const crypto = require("crypto");
-// const { sendMailToCustomer, sendMailToAdmin } = require('../utils/NodeMailer.js')
+const Booking = require('../models/Booking');
+const { razorpayInstance } = require('../utils/razorpayInstance.js');
+const crypto = require("crypto");
+const { sendMailToCustomer, sendMailToAdmin } = require('../utils/NodeMailer.js')
 
 
-// module.exports.paymentCheckout = async (req, res) => {
-//     const options = {
-//         amount: req.body.price * 100,
-//         currency: "INR",
-//     };
+module.exports.paymentCheckout = async (req, res) => {
+    const options = {
+        amount: req.body.price * 100,
+        currency: "INR",
+    };
 
-//     try {
-//         const order = await razorpayInstance.orders.create(options);
-//         res.json(order);
-//     } catch (error) {
-//         console.error(error);
-//         res.status(500).send("Server Error");
-//     }
-// };
+    try {
+        const order = await razorpayInstance.orders.create(options);
+        res.json(order);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Server Error");
+    }
+};
 
-// const payments = new Map();
+const payments = new Map();
 
-// module.exports.paymentVerification = async (req, res) => {
-//     const payment = payments.get(req.body.razorpay_payment_id);
+module.exports.paymentVerification = async (req, res) => {
+    const payment = payments.get(req.body.razorpay_payment_id);
 
-//     if (!payment) {
-//         res.redirect(process.env.PAYMENT_FAILURE_URL);
-//     }
+    if (!payment) {
+        res.redirect(process.env.PAYMENT_FAILURE_URL);
+    }
 
-//     const booking = new Booking({
-//         name: payment.notes.name,
-//         email: payment.notes.email,
-//         phone: payment.notes.phone,
-//         service: payment.notes.service,
-//         date: payment.notes.date,
-//         time: payment.notes.time,
-//         price: payment.amount / 100,
-//         payment_id: payment.id,
-//         payment: payment.status
-//     });
+    const booking = new Booking({
+        name: payment.notes.name,
+        email: payment.notes.email,
+        phone: payment.notes.phone,
+        service: payment.notes.service,
+        date: payment.notes.date,
+        time: payment.notes.time,
+        price: payment.amount / 100,
+        payment_id: payment.id,
+        payment: payment.status
+    });
 
-//     try {
-//         const savedBooking = await booking.save();
-//         payments.delete(req.body.razorpay_payment_id);
-//         if (payment.status == 'failed') {
-//             return res.redirect(process.env.PAYMENT_FAILURE_URL);
-//         }
-//         sendMailToAdmin(payment.notes.name, payment.notes.service, payment.notes.date, payment.notes.time);
-//         sendMailToCustomer(payment.notes.email, payment.notes.name, payment.notes.service, payment.notes.date, payment.notes.time);
-//         res.redirect(process.env.PAYMENT_SUCCESS_URL);
+    try {
+        const savedBooking = await booking.save();
+        payments.delete(req.body.razorpay_payment_id);
+        if (payment.status == 'failed') {
+            return res.redirect(process.env.PAYMENT_FAILURE_URL);
+        }
+        // sendMailToAdmin(payment.notes.name, payment.notes.service, payment.notes.date, payment.notes.time);
+        // sendMailToCustomer(payment.notes.email, payment.notes.name, payment.notes.service, payment.notes.date, payment.notes.time);
+        return res.redirect(process.env.PAYMENT_SUCCESS_URL);
 
-//     } catch (error) {
-//         console.error('Error saving booking:', error);
-//         res.status(500).send('Error on saving booking');
-//     }
-// }
+    } catch (error) {
+        console.error('Error saving booking:', error);
+        res.status(500).send('Error on saving booking');
+    }
+}
 
-// module.exports.paymentWebhook = async (req, res) => {
-//     const signature = req.get('x-razorpay-signature');
+module.exports.paymentWebhook = async (req, res) => {
+    const signature = req.get('x-razorpay-signature');
 
-//     try {
-//         const bodyString = req.body.toString();
-//         const expectedSignature = crypto.createHmac('sha256', process.env.RAZORPAY_WEBHOOK_SECRET)
-//             .update(bodyString)
-//             .digest('hex');
+    try {
+        const bodyString = req.body.toString();
+        const expectedSignature = crypto.createHmac('sha256', process.env.RAZORPAY_WEBHOOK_SECRET)
+            .update(bodyString)
+            .digest('hex');
 
-//         if (signature === expectedSignature) {
-//             const event = JSON.parse(bodyString);
+        if (signature === expectedSignature) {
+            const event = JSON.parse(bodyString);
 
-//             if (event.event === 'payment.captured') {
-//                 const payment = event.payload.payment.entity;
-//                 console.log(`Payment captured: ${payment.id}`);
-//                 payments.set(payment.id, payment);
-//             }
-//             if (event.event === 'payment.failed') {
-//                 return res.redirect(process.env.PAYMENT_FAILURE_URL)
-//             }
-//             res.status(200).send('OK');
-//         }
-//         else {
-//             console.log("Invalid Signature!")
-//             res.status(400).send('Invalid signature');
-//         }
+            if (event.event === 'payment.captured') {
+                const payment = event.payload.payment.entity;
+                console.log(`Payment captured: ${payment.id}`);
+                payments.set(payment.id, payment);
+            }
+            if (event.event === 'payment.failed') {
+                return res.redirect(process.env.PAYMENT_FAILURE_URL)
+            }
+            res.status(200).send('OK');
+        }
+        else {
+            console.log("Invalid Signature!")
+            res.status(400).send('Invalid signature');
+        }
 
-//     } catch (error) {
-//         console.error('Error handling webhook:', error);
-//         res.status(500).send('Error handling webhook');
-//     }
-// }
+    } catch (error) {
+        console.error('Error handling webhook:', error);
+        res.status(500).send('Error handling webhook');
+    }
+}
 
-// module.exports.creatingBooking = async (req, res) => {
-//     const data = req.body;
+module.exports.creatingBooking = async (req, res) => {
+    const data = req.body;
 
-//     const booking = new Booking({
-//         name: data.name,
-//         email: data.email,
-//         phone: data.phone,
-//         service: data.service,
-//         date: data.date,
-//         time: data.formTime,
-//         price: data.price,
-//         payment: "captured"
-//     });
+    const booking = new Booking({
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
+        service: data.service,
+        date: data.date,
+        time: data.formTime,
+        price: data.price,
+        payment: "captured"
+    });
 
-//     const savedBooking = await booking.save();
-//     sendMailToCustomer(data.email, data.name, data.service, data.date, data.formTime);
-//     res.json(savedBooking);
-// }
+    const savedBooking = await booking.save();
+    sendMailToCustomer(data.email, data.name, data.service, data.date, data.formTime);
+    res.json(savedBooking);
+}
 
 
 // // let message = {
@@ -132,125 +132,137 @@
 // // }
 
 
-const Booking = require('../models/Booking');
-const { razorpayInstance } = require('../utils/razorpayInstance.js');
-const crypto = require("crypto");
-const { sendMailToCustomer, sendMailToAdmin } = require('../utils/NodeMailer.js');
+// const Booking = require('../models/Booking');
+// const { razorpayInstance } = require('../utils/razorpayInstance.js');
+// const crypto = require("crypto");
+// const { sendMailToCustomer, sendMailToAdmin } = require('../utils/NodeMailer.js');
 
-// Map to store payments temporarily
-const payments = new Map();
+// // Map to store payments temporarily
+// const payments = new Map();
 
-module.exports.paymentCheckout = async (req, res) => {
-    const { price } = req.body;
-    const options = {
-        amount: price * 100, // Convert price to paise (smallest currency unit)
-        currency: "INR",
-    };
+// module.exports.paymentCheckout = async (req, res) => {
+//     const { price } = req.body;
+//     const options = {
+//         amount: price * 100, // Convert price to paise (smallest currency unit)
+//         currency: "INR",
+//     };
 
-    try {
-        const order = await razorpayInstance.orders.create(options);
-        res.json(order);
-    } catch (error) {
-        console.error('Error during payment checkout:', error);
-        res.status(500).send("Server Error");
-    }
-};
+//     try {
+//         const order = await razorpayInstance.orders.create(options);
+//         res.json(order);
+//     } catch (error) {
+//         console.error('Error during payment checkout:', error);
+//         res.status(500).send("Server Error");
+//     }
+//     console.log("check out complete!")
+// };
 
-module.exports.paymentVerification = async (req, res) => {
-    const { razorpay_payment_id } = req.body;
-    const payment = payments.get(razorpay_payment_id);
+// module.exports.paymentVerification = async (req, res) => {
+//     console.log("payment varification complete!")
+//     const { razorpay_payment_id } = req.body;
+//     const payment = payments.get(razorpay_payment_id);
 
-    if (!payment) {
-        return res.redirect(process.env.PAYMENT_FAILURE_URL);
-    }
+//     if (!payment) {
+//         console.log("shayad yha fail ho rha he!")
+//         return res.redirect('http://localhost:5173/?paymentStatus=failure');
+//     }
 
-    const bookingData = {
-        name: payment.notes.name,
-        email: payment.notes.email,
-        phone: payment.notes.phone,
-        service: payment.notes.service,
-        date: payment.notes.date,
-        time: payment.notes.time,
-        price: payment.amount / 100, // Convert amount back to currency unit
-        payment_id: payment.id,
-        payment: payment.status
-    };
+//     const bookingData = {
+//         name: payment.notes.name,
+//         email: payment.notes.email,
+//         phone: payment.notes.phone,
+//         service: payment.notes.service,
+//         date: payment.notes.date,
+//         time: payment.notes.time,
+//         price: payment.amount / 100, // Convert amount back to currency unit
+//         payment_id: payment.id,
+//         payment: payment.status
+//     };
 
-    const booking = new Booking(bookingData);
+//     const booking = new Booking(bookingData);
 
-    try {
-        const savedBooking = await booking.save();
-        payments.delete(razorpay_payment_id);
+//     try {
+//         const savedBooking = await booking.save();
+//         console.log("saved booking", savedBooking)
+//         payments.delete(razorpay_payment_id);
 
-        if (payment.status === 'failed') {
-            return res.redirect(process.env.PAYMENT_FAILURE_URL);
-        }
+//         if (payment.status === 'failed') {
 
-        sendMailToAdmin(payment.notes.name, payment.notes.service, payment.notes.date, payment.notes.time);
-        sendMailToCustomer(payment.notes.email, payment.notes.name, payment.notes.service, payment.notes.date, payment.notes.time);
+//             return res.redirect('http://localhost:5173/?paymentStatus=failure');
+//         }
 
-        res.redirect(process.env.PAYMENT_SUCCESS_URL);
+//         sendMailToAdmin(payment.notes.name, payment.notes.service, payment.notes.date, payment.notes.time);
+//         sendMailToCustomer(payment.notes.email, payment.notes.name, payment.notes.service, payment.notes.date, payment.notes.time);
 
-    } catch (error) {
-        console.error('Error saving booking:', error);
-        res.status(500).send('Error saving booking');
-    }
-};
+//         console.log('payment complete')
+//         res.redirect(process.env.PAYMENT_SUCCESS_URL);
 
-module.exports.paymentWebhook = async (req, res) => {
-    const signature = req.get('x-razorpay-signature');
-    const bodyString = JSON.stringify(req.body);
 
-    try {
-        const expectedSignature = crypto.createHmac('sha256', process.env.RAZORPAY_WEBHOOK_SECRET)
-            .update(bodyString)
-            .digest('hex');
+//     } catch (error) {
+//         console.error('Error saving booking:', error);
+//         res.status(500).send('Error saving booking');
+//     }
+// };
 
-        if (signature !== expectedSignature) {
-            console.log("Invalid Signature!");
-            return res.status(400).send('Invalid signature');
-        }
+// module.exports.paymentWebhook = async (req, res) => {
+//     console.log("webhook complete!")
+//     const signature = req.get('x-razorpay-signature');
+//     const bodyString = JSON.stringify(req.body);
 
-        const event = req.body;
+//     try {
+//         const expectedSignature = crypto.createHmac('sha256', 'wvwfB_V2cyBSrux')
+//             .update(bodyString)
+//             .digest('hex');
 
-        if (event.event === 'payment.captured') {
-            const payment = event.payload.payment.entity;
-            console.log(`Payment captured: ${payment.id}`);
-            payments.set(payment.id, payment);
-        } else if (event.event === 'payment.failed') {
-            return res.redirect(process.env.PAYMENT_FAILURE_URL);
-        }
+//         console.log("current signature", signature)
+//         console.log("expected signature", expectedSignature)
 
-        res.status(200).send('OK');
+//         if (signature !== expectedSignature) {
+//             console.log("Invalid Signature!");
+//             return res.send("ha bhai yhi payment fail ho rha he!")
+//             // return res.redirect('http://localhost:5173/?paymentStatus=failure');
+//         }
 
-    } catch (error) {
-        console.error('Error handling webhook:', error);
-        res.status(500).send('Error handling webhook');
-    }
-};
+//         const event = req.body;
 
-module.exports.creatingBooking = async (req, res) => {
-    // console.log(req.body)
-    console.log("yha nhi aaya bhai");
-    const { name, email, phone, service, date, formTime, price } = req.body;
+//         if (event.event === 'payment.captured') {
+//             const payment = event.payload.payment.entity;
+//             console.log(`Payment captured: ${payment.id}`);
+//             payments.set(payment.id, payment);
+//         } else if (event.event === 'payment.failed') {
+//             return res.redirect('http://localhost:5173/?paymentStatus=failure');
+//         }
 
-    const bookingData = {
-        name,
-        email,
-        phone,
-        service,
-        date,
-        time: formTime,
-        price,
-        payment: "captured"
-    };
+//         res.status(200).send('OK');
 
-    try {
-        const savedBooking = await new Booking(bookingData).save();
-        // sendMailToCustomer(email, name, service, date, formTime);
-        res.json(savedBooking);
-    } catch (error) {
-        console.error('Error creating booking:', error);
-        res.status(500).send('Error creating booking');
-    }
-};
+//     } catch (error) {
+//         console.error('Error handling webhook:', error);
+//         res.status(500).send('Error handling webhook');
+//     }
+// };
+
+// module.exports.creatingBooking = async (req, res) => {
+//     // console.log(req.body)
+//     console.log("yha nhi aaya bhai");
+//     const { name, email, phone, service, date, formTime, price } = req.body;
+
+//     const bookingData = {
+//         name,
+//         email,
+//         phone,
+//         service,
+//         date,
+//         time: formTime,
+//         price,
+//         payment: "captured"
+//     };
+
+//     try {
+//         const savedBooking = await new Booking(bookingData).save();
+//         // sendMailToCustomer(email, name, service, date, formTime);
+//         res.json(savedBooking);
+//     } catch (error) {
+//         console.error('Error creating booking:', error);
+//         res.status(500).send('Error creating booking');
+//     }
+// };

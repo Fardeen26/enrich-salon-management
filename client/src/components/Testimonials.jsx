@@ -1,5 +1,5 @@
 import Slider from "react-slick";
-import Heading from './utils-component/Heading';
+import Heading from './Utils-Component/Heading';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Avatar from '@mui/material/Avatar';

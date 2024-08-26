@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios';
 import { Toaster, toast } from 'sonner';
-
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 const Profile = () => {
     const [username, setUsername] = useState('')
@@ -11,6 +12,8 @@ const Profile = () => {
     const [profileUrl, setProfileUrl] = useState('')
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [isPasswordHidden, setIsPasswordHidden] = useState(true)
+    const [isPasswordHidden2, setIsPasswordHidden2] = useState(true)
 
     useEffect(() => {
         const fetchProfileUrl = async () => {
@@ -73,11 +76,17 @@ const Profile = () => {
                         </div>
                         <div className='py-2'>
                             <label htmlFor='password' className='block mb-2 text-sm font-medium dark:text-white text-black'>Password</label>
-                            <input type="password" name='password' value={password} placeholder="password" onChange={(e) => setPassword(e.target.value)} className='bg-black text-white p-2 border rounded w-full' required />
+                            <div className="relative">
+                                <input type={`${isPasswordHidden ? 'password' : 'text'}`} name='password' value={password} placeholder="password" onChange={(e) => setPassword(e.target.value)} className='bg-black text-white p-2 border rounded w-full' required />
+                                <span className='absolute text-white right-4 top-2' onClick={() => setIsPasswordHidden(!isPasswordHidden)}>{isPasswordHidden ? <VisibilityIcon sx={{ fontSize: '20px' }} /> : <VisibilityOffIcon sx={{ fontSize: '20px' }} />}</span>
+                            </div>
                         </div>
                         <div className='py-2'>
                             <label htmlFor='password2' className='block mb-2 text-sm font-medium dark:text-white text-black'>Enter Again</label>
-                            <input type="password" name='password2' placeholder="Enter password Again" onChange={(e) => setPassword2(e.target.value)} className='bg-black text-white p-2 border rounded w-full' required />
+                            <div className="relative">
+                                <input type={`${isPasswordHidden2 ? 'password' : 'text'}`} name='password2' placeholder="Enter password Again" onChange={(e) => setPassword2(e.target.value)} className='bg-black text-white p-2 border rounded w-full' required />
+                                <span className='absolute text-white right-4 top-2' onClick={() => setIsPasswordHidden2(!isPasswordHidden2)}>{isPasswordHidden2 ? <VisibilityIcon sx={{ fontSize: '20px' }} /> : <VisibilityOffIcon sx={{ fontSize: '20px' }} />}</span>
+                            </div>
                         </div>
                         {error && (<p className='text-red-500 text-sm'>{error}</p>)}
                         <button type="submit" className='bg-blue-500 text-white p-2 mt-3 rounded w-full'>{isLoading ? 'Loading...' : 'Edit'}</button>

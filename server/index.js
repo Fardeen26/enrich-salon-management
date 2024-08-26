@@ -43,6 +43,10 @@ app.use(session({
   },
 }))
 
+app.get('/', (req, res) => {
+  res.send('Hello World!')
+})
+
 app.use('/api', dataRouter);
 app.use('/api', paymentRouter);
 app.use('/api/admin', adminRouter);

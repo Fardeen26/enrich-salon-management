@@ -6,7 +6,7 @@
     position: relative;
     height: var(--uib-size);
     width: var(--uib-size);
-    margin-top: 160px;
+    margin-top: 190px;
 }
 
 .dot-spinner__dot {
