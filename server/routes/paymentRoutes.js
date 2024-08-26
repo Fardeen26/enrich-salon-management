@@ -6,7 +6,7 @@ const bookingSchema = require('../authentication/bookingSchema')
 const { validateBooking } = require('../middleware')
 
 router.post('/demo-booking', bodyParser.json(), paymentController.creatingBooking)
-router.post('/checkout', bodyParser.json(), validateBooking(bookingSchema), paymentController.paymentCheckout) // order create route
+router.post('/checkout', bodyParser.json(), validateBooking(bookingSchema), paymentController.paymentCheckout)
 router.post('/paymentverification', bodyParser.json(), paymentController.paymentVerification);
 router.post('/webhook', bodyParser.raw({ type: '*/*' }), paymentController.paymentWebhook);
 

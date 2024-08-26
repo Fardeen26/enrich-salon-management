@@ -62,11 +62,11 @@ const BookingForm = () => {
         }
     }
 
-    // const handleSendMail = async () => {
-    //     const resSendMail = await axios.get(import.meta.env.DATA_BACKEND_URL+'/sendemail');
-    //     if (resSendMail)
-    //         console.log(resSendMail);
-    // }
+    const handleSendMail = async () => {
+        const resSendMail = await axios.get('https://b7v4hvw7-3000.inc1.devtunnels.ms/sendemail');
+        if (resSendMail)
+            console.log(resSendMail);
+    }
 
     const onSubmit = async () => {
         // const responce = await axios.post('/api/demo-booking', formData);
@@ -235,7 +235,9 @@ const BookingForm = () => {
                                 <button className="btn bg-blue-500 font-semibold text-white border w-full pay-btn" type="submit" disabled={isSubmitting}>{isSubmitting ? "Loading..." : "Pay Now"}</button>
                             </div>
                             {errors.root && <div className="text-red-500">{errors.root.message}</div>}
+
                         </form>
+                        <button className="bg-red-500 text-black" onClick={handleSendMail}>Send Mail</button>
                     </div>
                 </div>
             </div>

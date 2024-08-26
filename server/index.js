@@ -9,7 +9,6 @@ const app = express();
 const session = require('express-session')
 const cookieParser = require('cookie-parser');
 
-
 const dataRouter = require('./routes/dataRoutes.js');
 const paymentRouter = require('./routes/paymentRoutes.js')
 const adminRouter = require('./routes/adminRoutes.js')

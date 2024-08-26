@@ -6,3 +6,4 @@ router.route("/service-data")
     .get(dataController.serviceData);
 
 module.exports = router;
+
