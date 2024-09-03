@@ -7,7 +7,6 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 const Profile = () => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
-    // eslint-disable-next-line no-unused-vars
     const [password2, setPassword2] = useState('')
     const [profileUrl, setProfileUrl] = useState('')
     const [error, setError] = useState('');
@@ -19,14 +18,14 @@ const Profile = () => {
         const fetchProfileUrl = async () => {
             try {
                 setIsLoading(true);
-                const responce = await axios.get('/api/admin/profile-url');
-                if (responce.data) {
-                    setUsername(responce.data.username)
-                    setPassword(responce.data.password)
-                    setProfileUrl(responce.data.profilePic)
+                const response = await axios.get('/api/admin/profile-url');
+                if (response.data) {
+                    setUsername(response.data.username)
+                    setPassword(response.data.password)
+                    setProfileUrl(response.data.profilePic)
                 }
             } catch (error) {
-                console.error('An Error Occured:', error);
+                console.error('An Error Occurred:', error);
             } finally {
                 setIsLoading(false);
             }
@@ -45,8 +44,8 @@ const Profile = () => {
         }
         else {
             try {
-                const responce = await axios.post('/api/admin/edit-adminprofile', { username, password });
-                if (responce.data.success) {
+                const response = await axios.put('/api/admin/edit-adminprofile', { username, password });
+                if (response.data.success) {
                     setIsLoading(false);
                     toast.success('Information Updated Successfully!', {
                         className: 'p-3',
@@ -54,13 +53,13 @@ const Profile = () => {
                     });
                 }
             } catch (error) {
-                console.log("An Error Occured", error);
+                console.error("An Error Occurred", error);
             }
         }
     }
 
     return (
-        <>
+        <div className="">
             <div className='flex flex-wrap p-4 justify-center'>
                 <Toaster richColors position="top-center" visibleToasts={1} />
                 <div className='w-96 max-sm:w-full flex max-2xl:justify-start max-lg:justify-center max-sm:justify-center'>
@@ -72,19 +71,38 @@ const Profile = () => {
                     <form className='flex flex-col' onSubmit={handleSubmit}>
                         <div className='py-2'>
                             <label htmlFor='username' className='block mb-2 text-sm font-medium dark:text-white text-black'>Username</label>
-                            <input type="text" name='username' value={username} placeholder="username" onChange={(e) => setUsername(e.target.value)} className='bg-black text-white p-2 border rounded w-full' />
+                            <input
+                                type="text"
+                                name='username'
+                                value={username}
+                                placeholder="username"
+                                onChange={(e) => setUsername(e.target.value)}
+                                className='bg-black text-white p-2 border rounded w-full' />
                         </div>
                         <div className='py-2'>
                             <label htmlFor='password' className='block mb-2 text-sm font-medium dark:text-white text-black'>Password</label>
                             <div className="relative">
-                                <input type={`${isPasswordHidden ? 'password' : 'text'}`} name='password' value={password} placeholder="password" onChange={(e) => setPassword(e.target.value)} className='bg-black text-white p-2 border rounded w-full' required />
+                                <input
+                                    type={`${isPasswordHidden ? 'password' : 'text'}`}
+                                    name='password'
+                                    value={password}
+                                    placeholder="password"
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    className='bg-black text-white p-2 border rounded w-full'
+                                    required />
                                 <span className='absolute text-white right-4 top-2' onClick={() => setIsPasswordHidden(!isPasswordHidden)}>{isPasswordHidden ? <VisibilityIcon sx={{ fontSize: '20px' }} /> : <VisibilityOffIcon sx={{ fontSize: '20px' }} />}</span>
                             </div>
                         </div>
                         <div className='py-2'>
                             <label htmlFor='password2' className='block mb-2 text-sm font-medium dark:text-white text-black'>Enter Again</label>
                             <div className="relative">
-                                <input type={`${isPasswordHidden2 ? 'password' : 'text'}`} name='password2' placeholder="Enter password Again" onChange={(e) => setPassword2(e.target.value)} className='bg-black text-white p-2 border rounded w-full' required />
+                                <input
+                                    type={`${isPasswordHidden2 ? 'password' : 'text'}`}
+                                    name='password2'
+                                    placeholder="Enter password Again"
+                                    onChange={(e) => setPassword2(e.target.value)}
+                                    className='bg-black text-white p-2 border rounded w-full'
+                                    required />
                                 <span className='absolute text-white right-4 top-2' onClick={() => setIsPasswordHidden2(!isPasswordHidden2)}>{isPasswordHidden2 ? <VisibilityIcon sx={{ fontSize: '20px' }} /> : <VisibilityOffIcon sx={{ fontSize: '20px' }} />}</span>
                             </div>
                         </div>
@@ -93,8 +111,7 @@ const Profile = () => {
                     </form>
                 </div>
             </div>
-
-        </>
+        </div>
     )
 }
 

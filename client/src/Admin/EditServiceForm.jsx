@@ -16,7 +16,7 @@ const EditServiceForm = () => {
                 setServicePrice(res.data.price);
             })
         } catch (error) {
-            console.error("An Error Occured", error);
+            console.error("An Error Occurred", error);
         }
     }, []);
 
@@ -24,12 +24,12 @@ const EditServiceForm = () => {
         e.preventDefault();
         setIsLoading(true)
         try {
-            const responce = await axios.post(`/api/admin/edit-service/${id}`, { serviceName, servicePrice });
-            if (responce.data.success) {
+            const response = await axios.post(`/api/admin/edit-service/${id}`, { serviceName, servicePrice });
+            if (response.data.success) {
                 navigate('/admin/dashboard/services');
             }
         } catch (error) {
-            console.error("An Error Occured", error);
+            console.error("An Error Occurred", error);
         } finally {
             setIsLoading(false);
         }
@@ -37,15 +37,25 @@ const EditServiceForm = () => {
 
     return (
         <div className="h-[80vh] container flex justify-center items-center px-4 overflow-hidden">
-            <form onSubmit={handleSubmit} className=''>
+            <form onSubmit={handleSubmit}>
                 <h2 className='text-center text-2xl font-bold mb-3'>Edit Your Service</h2>
                 <div className='py-2'>
                     <label htmlFor='service' className='block mb-2 text-sm font-medium dark:text-white text-black'>Service</label>
-                    <input type="text" name='service' value={serviceName} onChange={(e) => setServiceName(e.target.value)} className='bg-black text-white p-2 w-72 border rounded' />
+                    <input
+                        type="text"
+                        name='service'
+                        value={serviceName}
+                        onChange={(e) => setServiceName(e.target.value)}
+                        className='bg-black text-white p-2 w-72 border rounded' />
                 </div>
                 <div className='py-2'>
                     <label htmlFor='price' className='block mb-2 text-sm font-medium dark:text-white text-black'>Price</label>
-                    <input type='number' name='price' value={servicePrice} onChange={(e) => setServicePrice(e.target.value)} className='bg-black text-white p-2 w-72 rounded' />
+                    <input
+                        type='number'
+                        name='price'
+                        value={servicePrice}
+                        onChange={(e) => setServicePrice(e.target.value)}
+                        className='bg-black text-white p-2 w-72 rounded' />
                 </div>
                 <button type="submit" className='bg-blue-500 text-white p-2 mt-3 rounded w-full'>{isLoading ? 'Loading...' : 'Edit'}</button>
 

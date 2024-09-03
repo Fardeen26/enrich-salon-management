@@ -1,4 +1,3 @@
-import React from 'react'
 import MinimizeIcon from '@mui/icons-material/Minimize';
 import Salon_Img from '../../assets/salon-demo-img.jpg';
 import { Link as ScrollLink } from 'react-scroll';
@@ -12,11 +11,9 @@ function AboutSection() {
           <br />
           <span><MinimizeIcon /><MinimizeIcon /></span>
         </div>
-        <div className="desc-right max-2xl:basis-1/2 max-xl:basis-1/2 max-md:basis-1/2 max-sm:basis-full max-sm:text-sm max-sm:px-4 max-sm:text-start max-sm:mt-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo vero, tenetur, blanditiis incidunt iure eaque inventore quas culpa nemo ducimus sapiente sequi hic! Possimus, repellendus sequi sunt quas dolore, iste commodi nesciunt atque, impedit recusandae nisi distinctio error cupiditate? Dignissimos debitis consequuntur pariatur suscipit beatae aliquid labore provident possimus cum.
+        <div className="desc-right max-2xl:basis-1/2 max-xl:basis-1/2 max-md:basis-1/2 max-sm:basis-full max-sm:text-sm max-sm:px-4 max-sm:text-start max-sm:mt-3">Welcome to Enrich Salon, where beauty and luxury converge. Our expert stylists are committed to enhancing your unique style with personalized care. Whether it&apos;s a chic haircut, vibrant color, or a relaxing spa treatment, we ensure every visit leaves you refreshed and confident. Step into our modern space, and let us pamper you with top-notch service and premium products. Your beauty is our passion.
           <br />
-          <button className="button mt-4">
-            <ScrollLink sx={{ my: 2, color: 'white', display: 'block' }} className='cursor-pointer' activeClass="active" to='Staff' spy={true} smooth={true} offset={-250} duration={600} >Our Stylists</ScrollLink>
-          </button>
+          <ScrollLink sx={{ my: 2, color: 'white', display: 'block' }} className='cursor-pointer' activeClass="active" to='Staff' spy={true} smooth={true} offset={-100} duration={600} ><button className="button mt-4">Our Stylists</button></ScrollLink>
         </div>
       </div>
 

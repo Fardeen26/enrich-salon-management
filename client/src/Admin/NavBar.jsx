@@ -13,10 +13,7 @@ import './Admin.css'
 import { Badge, Divider, Popover } from '@mui/material';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
-
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-const profileLinks = ['/admin/dashboard/account', '/admin/dashboard/account', '/admin/dashboard/', '/admin/login'];
+import { Link, useNavigate } from 'react-router-dom';
 
 
 // eslint-disable-next-line react/prop-types
@@ -25,7 +22,9 @@ const NavBar = ({ windowWidth, isMenuOpen, handleOpenUserMenu, handleCloseUserMe
     const [invisible, setInvisible] = useState(false);
     const [notifications, setNotifications] = useState([]);
     const [notificationSeen, setNotificationSeen] = useState(false);
-    const [profileUrl, setprofileUrl] = useState('')
+    const [profileUrl, setProfileUrl] = useState('')
+
+    const navigate = useNavigate();
 
     const handleClick = (event) => {
         setPopAnchorEl(event.currentTarget);
@@ -44,29 +43,40 @@ const NavBar = ({ windowWidth, isMenuOpen, handleOpenUserMenu, handleCloseUserMe
     useEffect(() => {
         const recentBookings = async () => {
             try {
-                const responce = await axios.get('/api/admin/recent-bookings');
-                if (responce.data) {
-                    setNotifications(responce.data);
+                const response = await axios.get('/api/admin/recent-bookings');
+                if (response.data) {
+                    setNotifications(response.data);
                 }
             } catch (error) {
-                console.error("An Error Occured", error);
+                console.error("An Error Occurred", error);
             }
         }
 
         const fetchProfileUrl = async () => {
             try {
-                const responce = await axios.get('/api/admin/profile-url');
-                if (responce.data) {
-                    setprofileUrl(responce.data.profilePic)
+                const response = await axios.get('/api/admin/profile-url');
+                if (response.data) {
+                    setProfileUrl(response.data.profilePic)
                 }
             } catch (error) {
-                console.error("An Error Occured", error);
+                console.error("An Error Occurred", error);
             }
         }
 
         recentBookings();
         fetchProfileUrl();
     }, []);
+
+    const handleLogout = async () => {
+        try {
+            const response = await axios.post('/api/admin/logout');
+            if (response.data.success) {
+                navigate('/admin/login')
+            }
+        } catch (error) {
+            console.error('An Error Occurred', error);
+        }
+    }
 
     return (
         <div className="nav-con sticky top-0 z-10">
@@ -88,7 +98,6 @@ const NavBar = ({ windowWidth, isMenuOpen, handleOpenUserMenu, handleCloseUserMe
 
                 <Stack direction="row" justifyContent="center" alignItems="center" spacing={3}>
                     <div className="notification">
-
                         {
                             notificationSeen ?
                                 <Badge color="warning" variant="dot" invisible={invisible} className='cursor-pointer'>
@@ -99,8 +108,6 @@ const NavBar = ({ windowWidth, isMenuOpen, handleOpenUserMenu, handleCloseUserMe
                                 </Badge>
                         }
 
-
-                        {/* Popover */}
                         <Popover
                             id={id}
                             open={open}
@@ -121,11 +128,8 @@ const NavBar = ({ windowWidth, isMenuOpen, handleOpenUserMenu, handleCloseUserMe
                                 ))
                             }
                         </Popover>
-
-
-
-
                     </div>
+
                     <div className="profile">
                         <Box sx={{ flexGrow: 0 }}>
                             <Tooltip title="Open settings">
@@ -149,11 +153,15 @@ const NavBar = ({ windowWidth, isMenuOpen, handleOpenUserMenu, handleCloseUserMe
                                 open={Boolean(anchorElUser)}
                                 onClose={handleCloseUserMenu}
                             >
-                                {settings.map((setting, idx) => (
-                                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                        <Typography textAlign="center"><Link to={profileLinks[idx]}>{setting}</Link> </Typography>
-                                    </MenuItem>
-                                ))}
+                                <MenuItem onClick={handleCloseUserMenu}>
+                                    <Typography textAlign="center"><Link to='/admin/dashboard/account'>Account</Link> </Typography>
+                                </MenuItem>
+                                <MenuItem onClick={handleCloseUserMenu}>
+                                    <Typography textAlign="center"><Link to='/admin/dashboard/'>Dashboard</Link> </Typography>
+                                </MenuItem>
+                                <MenuItem onClick={handleCloseUserMenu}>
+                                    <Typography textAlign="center" onClick={handleLogout}>Logout</Typography>
+                                </MenuItem>
                             </Menu>
                         </Box>
                     </div>

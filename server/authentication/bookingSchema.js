@@ -17,9 +17,13 @@ const bookingSchema = z.object({
     service: z
         .string({ required_error: "An Service is required!" }),
     date: z
-        .string({ required_error: "Date is required!" }),
+        .string({ required_error: "Date is required!" })
+        .trim()
+        .min(10, { message: "The Date is required!" }),
     formTime: z
-        .string({ required_error: "Time is required!" }),
+        .string({ required_error: "Time is required!" })
+        .trim()
+        .min(8, { message: "The Time is required!" }),
     price: z
         .number({ required_error: "Price is required!" }),
 });

@@ -1,12 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import Stack from '@mui/material/Stack';
 import PieChartIcon from '@mui/icons-material/PieChart';
 import PeopleIcon from '@mui/icons-material/People';
 import ContentCutIcon from '@mui/icons-material/ContentCut';
 import Person4Icon from '@mui/icons-material/Person4';
-import { Typography } from '@mui/material';
-import Divider from '@mui/material/Divider';
+import { Typography, Divider, Stack } from '@mui/material';
 
 import './Admin.css';
 
@@ -14,23 +12,44 @@ import './Admin.css';
 const SideBar = ({ isSideBarVisible, isMenuOpen }) => {
     const location = useLocation();
     const [selectedItem, setSelectedItem] = useState('');
+    const [isSelectedItem, setIsSelectedItem] = useState(false)
 
     useEffect(() => {
-        setSelectedItem(location.pathname);
+        if (location.pathname != '/admin/dashboard') {
+            setIsSelectedItem(true)
+            setSelectedItem(location.pathname);
+        }
     }, [])
 
     const handleItemClick = (path) => {
         setSelectedItem(path);
+        setIsSelectedItem(true)
     };
 
     return (
         <div className={`sidebar bg-black text-white py-3 ${isSideBarVisible || isMenuOpen ? 'open' : 'closed'}`}>
-            <h2 className='text-2xl text-center'>Enrich Hair Salon</h2>
+            <Typography
+                variant="p"
+                href="#app-bar-with-responsive-menu"
+                sx={{
+                    mr: 2,
+                    display: { xs: 'none', md: 'flex' },
+                    fontSize: '26px',
+                    color: 'white',
+                    textDecoration: 'none',
+                    marginLeft: '35px',
+                    marginTop: '-3px'
+                }}
+                className='pageLogo'
+            >
+                <Link to={'/admin/dashboard/'}>Enrich Hair Salon</Link>
+            </Typography>
+
             <Divider className='text-white bg-white' style={{ marginTop: '14px' }} />
             <ul className='p-4 mt-2'>
                 <Stack spacing={2}>
                     <Link to="/admin/dashboard/" onClick={() => handleItemClick("/admin/dashboard/")}>
-                        <div className={`side-item p-2 flex items-center text-center rounded-lg ${selectedItem === "/admin/dashboard/" ? 'selected' : ''}`}>
+                        <div className={`${!isSelectedItem ? 'selected' : ''} side-item p-2 flex items-center text-center rounded-lg ${selectedItem === "/admin/dashboard/" ? 'selected' : ''}`}>
                             <PieChartIcon className="mr-2" />
                             <Typography component="h1" sx={{ color: 'inherit', fontSize: '1rem', fontWeight: 500 }} >
                                 Overview

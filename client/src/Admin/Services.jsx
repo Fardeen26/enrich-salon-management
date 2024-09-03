@@ -1,17 +1,16 @@
 import { useEffect, useState } from 'react'
-import ServiceBox from './utils-components/ServiceBox';
+import ServiceBox from './Utils-Components/ServiceBox';
 import { Link, useLocation } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
 import Grid3x3Icon from '@mui/icons-material/Grid3x3';
-import axios from 'axios';
 import { Toaster, toast } from 'sonner';
+import axios from 'axios';
 
 const Services = () => {
     const [services, setServices] = useState([]);
     const [sonner, setSonner] = useState(false);
     const [pathKey, setPathKey] = useState("11111111");
     const location = useLocation();
-
 
     useEffect(() => {
         const fetchServices = async () => {
@@ -21,7 +20,7 @@ const Services = () => {
                     setServices(response.data)
                 }
             } catch (error) {
-                console.error("An Error Occured", error);
+                console.error("An Error Occurred", error);
             } finally {
                 setSonner(false)
             }
@@ -41,7 +40,6 @@ const Services = () => {
                 className: 'p-3',
                 duration: 3000,
             });
-
             setPathKey(location.key)
         }
 

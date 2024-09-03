@@ -22,8 +22,9 @@ const AdminLogin = () => {
             } else {
                 setError(response.data.message);
             }
-        } catch (err) {
-            console.log("An Error Occured")
+        } catch (error) {
+            setIsLoading(false);
+            console.error("An Error Occurred", error)
         } finally {
             setIsLoading(false);
         }
@@ -36,12 +37,22 @@ const AdminLogin = () => {
                 {error && <p className="text-red-600 text-center mb-2">{error}</p>}
                 <div className='py-2'>
                     <label htmlFor='username' className='block mb-2 text-sm font-medium dark:text-white text-black'>Username</label>
-                    <input type="text" name='username' value={username} onChange={(e) => setUsername(e.target.value)} className='bg-black text-white p-2 w-72 border rounded' />
+                    <input
+                        type="text"
+                        name='username'
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        className='bg-black text-white p-2 w-72 border rounded' />
                 </div>
                 <div className='py-2'>
                     <label htmlFor='password' className='block mb-2 text-sm font-medium dark:text-white text-black'>Password</label>
                     <div className="relative">
-                        <input type={`${isPasswordHidden ? 'password' : 'text'}`} name='password' value={password} onChange={(e) => setPassword(e.target.value)} className='bg-black text-white p-2 w-72 rounded' />
+                        <input
+                            type={`${isPasswordHidden ? 'password' : 'text'}`}
+                            name='password'
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            className='bg-black text-white p-2 w-72 rounded' />
                         <span className='absolute text-white right-3 top-2' onClick={() => setIsPasswordHidden(!isPasswordHidden)}>{isPasswordHidden ? <VisibilityIcon sx={{ fontSize: '18px' }} /> : <VisibilityOffIcon sx={{ fontSize: '18px' }} />}</span>
                     </div>
                 </div>

@@ -7,9 +7,7 @@ module.exports.isLoggedIn = (req, res, next) => {
 
 module.exports.validateBooking = (schema) => async (req, res, next) => {
     try {
-        console.log("aaaaaaa gya" + req.body);
         const parsedBody = await schema.parseAsync(req.body);
-        console.log(parsedBody)
         req.body = parsedBody;
         next();
     } catch (err) {

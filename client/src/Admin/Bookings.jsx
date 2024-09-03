@@ -29,7 +29,7 @@ const Bookings = () => {
                 }));
                 setBookings(formattedBookings);
             } catch (error) {
-                console.error('An Error Occured:', error);
+                console.error('An Error Occurred:', error);
             }
         };
 

@@ -12,7 +12,7 @@ const ServiceBox = ({ icon, serviceName, price, iconBGColor, _id }) => {
                 navigate('/admin/dashboard/services')
             }
         } catch (error) {
-            console.log("An Error Occured", error);
+            console.error("An Error Occurred", error);
         }
     }
 

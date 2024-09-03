@@ -46,9 +46,7 @@ const LineChart = () => {
 
     getMonthlyBookings();
     handleResize();
-  })
-
-
+  }, [])
 
   return (
     <MuiLineChart

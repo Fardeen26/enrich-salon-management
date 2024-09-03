@@ -21,9 +21,6 @@ async function sendMailToCustomer(to, name, service, date, time) {
             text: "Your service is successfully booked, Happy!",
             html: htmlContent,
         });
-
-        console.log('Email sent:', info.response);
-
     } catch (error) {
         console.error("Error occurred while sending email to customer:", error);
     }

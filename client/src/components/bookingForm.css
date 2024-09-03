@@ -20,23 +20,21 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .time-slot {
   padding: 10px 20px;
   margin: 5px;
-  border: 1px solid #ccc;
   border-radius: 4px;
-  background-color: #f9f9f9;
+  border: 1px solid #fff !important;
   cursor: pointer;
+  color: white;
 }
 
 .time-slot:hover {
-  background-color: black;
-  color: white;
+  background-color: transparent;
+  border: 1px solid #059669 !important;
 }
 
 .time-slot.selected {
-  background-color: #3b82f6;
-  color: #fff;
-  border: none !important;
-  transform: scale(1.1);
-  color: white;
+  background-color: transparent;
+  border: 1px solid #059669 !important;
+  transform: scale(1.05);
 }
 
 .tran-time {
@@ -48,11 +46,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .pay-btn:hover {
-  color: black !important;
-}
-
-.margin-left {
-  margin-left: 5px !important;
+  border: 1px solid #059669;
+  color: white !important;
 }
 
 @media screen and (max-width: 640px) {
@@ -61,13 +56,29 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   }
 }
 
-@media screen and (max-width: 391px) {
+@media screen and (max-width: 450px) {
   .time-slot {
-    padding: 7px 14px;
+    padding: 7px 12px;
     margin: 5px;
-    border: 1px solid #ccc;
     border-radius: 4px;
-    background-color: #f9f9f9;
+    cursor: pointer;
+  }
+}
+
+@media screen and (max-width: 415px) {
+  .time-slot {
+    padding: 7px 22px;
+    margin: 5px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+}
+
+@media screen and (max-width: 376px) {
+  .time-slot {
+    padding: 7px 17px;
+    margin: 5px;
+    border-radius: 4px;
     cursor: pointer;
   }
 }

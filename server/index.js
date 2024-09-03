@@ -1,6 +1,5 @@
 require('dotenv').config();
-const port = process.env.PORT;
-// const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const port = process.env.PORT || 3000;
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const express = require('express');
@@ -24,7 +23,7 @@ app.use(cookieParser());
 
 const dburl = process.env.LOCAL_MONGO_URL;
 main().then(() => {
-  console.log("Connected to MongoDB");
+  console.log("Connected to Database");
 }).catch(err => console.log(err));
 
 async function main() {
@@ -42,15 +41,12 @@ app.use(session({
   },
 }))
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
 
 app.use('/api', dataRouter);
 app.use('/api', paymentRouter);
 app.use('/api/admin', adminRouter);
 
 
-app.listen(3000, () => {
+app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

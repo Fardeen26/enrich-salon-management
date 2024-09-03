@@ -14,8 +14,7 @@ module.exports.paymentCheckout = async (req, res) => {
         const order = await razorpayInstance.orders.create(options);
         res.json(order);
     } catch (error) {
-        console.error(error);
-        res.status(500).send("Server Error");
+        res.status(500).json("Server Error", error);
     }
 };
 
@@ -24,7 +23,7 @@ const payments = new Map();
 module.exports.paymentVerification = async (req, res) => {
     const payment = payments.get(req.body.razorpay_payment_id);
 
-    if (!payment) {
+    if (!payment.notes) {
         res.redirect(process.env.PAYMENT_FAILURE_URL);
     }
 
@@ -41,7 +40,7 @@ module.exports.paymentVerification = async (req, res) => {
     });
 
     try {
-        const savedBooking = await booking.save();
+        await booking.save();
         payments.delete(req.body.razorpay_payment_id);
         if (payment.status == 'failed') {
             return res.redirect(process.env.PAYMENT_FAILURE_URL);
@@ -52,7 +51,7 @@ module.exports.paymentVerification = async (req, res) => {
 
     } catch (error) {
         console.error('Error saving booking:', error);
-        res.status(500).send('Error on saving booking');
+        res.status(500).json('Error on saving booking', error);
     }
 }
 
@@ -75,16 +74,15 @@ module.exports.paymentWebhook = async (req, res) => {
             if (event.event === 'payment.failed') {
                 return res.redirect(process.env.PAYMENT_FAILURE_URL)
             }
-            res.status(200).send('OK');
+            res.status(200).json('OK');
         }
         else {
-            console.log("Invalid Signature!")
-            res.status(400).send('Invalid signature');
+            res.status(400).json('Invalid signature');
         }
 
     } catch (error) {
         console.error('Error handling webhook:', error);
-        res.status(500).send('Error handling webhook');
+        res.status(500).json('Error handling webhook');
     }
 }
 

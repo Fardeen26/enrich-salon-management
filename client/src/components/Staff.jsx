@@ -31,17 +31,17 @@ export default Staff;
 const itemData = [
     {
         img: styler_1,
-        name: 'SHADAB HUSSAIN',
+        name: 'Sophia Monroe',
         role: "- COLORIST"
     },
     {
         img: styler_2,
-        name: 'JAVED ALI MANSURI',
+        name: 'Lily Carte',
         role: "- STYLER"
     },
     {
         img: styler_3,
-        name: 'JUNED MANSURI',
+        name: 'Emma Delgado',
         role: "- BEAUTICIAN"
     },
 ];

@@ -11,15 +11,8 @@ function App() {
   const [notificationShown, setNotificationShown] = useState(false);
 
   useEffect(() => {
-    if (location.pathname === '/') {
-      document.body.style.backgroundColor = 'white';
-    } else if (location.pathname === '/book') {
-      document.body.style.backgroundColor = 'black';
-    }
-
     const queryParams = new URLSearchParams(location.search);
     const paymentStatus = queryParams.get('paymentStatus');
-
     const notificationShownFromStorage = localStorage.getItem('notificationShown');
 
     if (paymentStatus && notificationShownFromStorage !== 'true') {
@@ -36,14 +29,13 @@ function App() {
       }
       localStorage.setItem('notificationShown', 'true');
       setNotificationShown(true);
-
       navigate(location.pathname, { replace: true });
     }
 
     return () => {
       setTimeout(() => {
         localStorage.removeItem('notificationShown');
-      }, 2000)
+      }, 3000)
 
     };
   }, [location.search, notificationShown, navigate, location.pathname]);

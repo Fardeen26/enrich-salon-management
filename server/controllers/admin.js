@@ -13,7 +13,7 @@ module.exports.login = (req, res) => {
         return res.status(200).json({ success: true });
     }
 
-    res.json({ success: false, message: "Invalid Crediantls" });
+    res.json({ success: false, message: "Invalid Credentials" });
 };
 
 module.exports.checkAuth = (req, res) => {
@@ -21,19 +21,17 @@ module.exports.checkAuth = (req, res) => {
     res.status(200).json({ isLoggedIn });
 };
 
-
-// Admin Dashboard
-module.exports.dashboard = (req, res) => {
-    res.send('Welcome to the Admin Dashboard');
-};
+module.exports.logout = (req, res) => {
+    req.session.isLoggedIn = false;
+    res.status(200).json({ success: true })
+}
 
 // Authentication middleware
 module.exports.checkAuthMiddleware = (req, res, next) => {
     if (req.session.isLoggedIn) {
         return next();
     }
-
-    res.json({ success: false, error: 'Unauthorized' });
+    res.json({ success: false, error: 'You are Unauthorized' });
 };
 
 // Booking Count
@@ -43,7 +41,6 @@ module.exports.BookingsCount = async (req, res) => {
         if (count > 0) {
             return res.status(200).json(count);
         }
-
         res.status(404).json({ success: false, message: 'No data available' });
     } catch (error) {
         res.status(500).json({ success: false, message: 'An error occurred while fetching the data' });
@@ -77,7 +74,6 @@ module.exports.totalServices = async (req, res) => {
         if (count > 0) {
             return res.status(200).json(count);
         }
-
         res.status(404).json({ success: false, message: 'No data available' });
     } catch (error) {
         console.error('Error fetching service count:', error);
@@ -157,7 +153,7 @@ module.exports.allServices = async (req, res) => {
         const services = await Services.find({});
         res.status(200).json(services);
     } catch (error) {
-        res.status(500).json({ error: true });
+        res.status(500).json({ error: true, message: "Error fetching all services" });
     }
 };
 
@@ -190,7 +186,6 @@ module.exports.createService = async (req, res) => {
         await newService.save();
         res.status(200).json({ success: true });
     } catch (error) {
-        console.log(error);
         res.status(500).json({ success: false, message: 'Error saving new service' });
     }
 };

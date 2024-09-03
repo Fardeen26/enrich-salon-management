@@ -32,7 +32,7 @@ const Home = () => {
                 if (responce.data)
                     setBookingCount(responce.data)
             } catch (error) {
-                console.error("An Error Occured", error);
+                console.error("An Error Occurred", error);
             }
         };
 
@@ -42,7 +42,7 @@ const Home = () => {
                 if (responce.data)
                     setTotalIncome(responce.data)
             } catch (error) {
-                console.error("An Error Occured", error);
+                console.error("An Error Occurred", error);
             }
         }
 
@@ -52,7 +52,7 @@ const Home = () => {
                 if (responce.data)
                     setTotalServices(responce.data);
             } catch (error) {
-                console.error("An Error Occured", error);
+                console.error("An Error Occurred", error);
             }
         }
 
@@ -62,7 +62,7 @@ const Home = () => {
                 if (responce.data)
                     setTotalCustomer(responce.data);
             } catch (error) {
-                console.error("An Error Occured", error);
+                console.error("An Error Occurred", error);
             }
         }
 
@@ -96,7 +96,7 @@ const Home = () => {
                     });
                 }
             } catch (error) {
-                console.error("An Error Occured", error);
+                console.error("An Error Occurred", error);
             }
         }
 
@@ -112,7 +112,7 @@ const Home = () => {
                     setRecentBookings(formattedBookings);
                 }
             } catch (error) {
-                console.error("An Error Occured", error);
+                console.error("An Error Occurred", error);
             }
         }
 
