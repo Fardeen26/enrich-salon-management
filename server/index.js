@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 app.use(cookieParser());
 
-const dburl = process.env.LOCAL_MONGO_URL;
+const dburl = process.env.MONGO_ATLAS_URL;
 main().then(() => {
   console.log("Connected to Database");
 }).catch(err => console.log(err));
