@@ -48,7 +48,7 @@ const BookingForm = () => {
         let currVal = e.target.value;
 
         try {
-            let servicedata = await axios.get('/api/service-data');
+            let servicedata = await axios.get('https://enrich-hair-salon.onrender.com/api/service-data');
             if (servicedata.data) {
                 setAllService(servicedata.data);
                 servicedata.data.map((item) => {
