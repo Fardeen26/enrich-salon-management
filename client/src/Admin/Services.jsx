@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import ServiceBox from './Utils-Components/ServiceBox';
+import ServiceBox from './ServiceBox';
 import { Link, useLocation } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
 import Grid3x3Icon from '@mui/icons-material/Grid3x3';
