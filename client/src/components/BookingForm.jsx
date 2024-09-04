@@ -65,7 +65,6 @@ const BookingForm = () => {
 
     const onSubmit = async () => {
         try {
-            console.log(formData.date)
             const orderResponce = await axios.post('/api/checkout', formData);
             if (orderResponce.data) {
                 let order = orderResponce.data;
@@ -225,7 +224,7 @@ const BookingForm = () => {
                                         className="font-['Cambria'] w-full bg-black form-select border border-gray-300 text-sm rounded-lg block p-2.5 text-white placeholder:text-white appearance-none"
                                         {...register("service")}
                                         onClick={handleOptions}
-                                        placeholder="click here to choose service">
+                                    >
                                         {
                                             allService.map((item, idx) => (
                                                 <option key={idx} value={item.serviceName}>{item.serviceName}</option>
