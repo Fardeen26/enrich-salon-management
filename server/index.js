@@ -41,7 +41,6 @@ app.use(session({
   },
 }))
 
-
 app.use('/api', dataRouter);
 app.use('/api', paymentRouter);
 app.use('/api/admin', adminRouter);
