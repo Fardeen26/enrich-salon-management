@@ -7,7 +7,7 @@ const ServiceBox = ({ icon, serviceName, price, iconBGColor, _id }) => {
     const navigate = useNavigate();
     const handleSubmit = async () => {
         try {
-            const responce = await axios.delete(`/api/admin/delete-service/${_id}`);
+            const responce = await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/admin/delete-service/${_id}`);
             if (responce.data.success) {
                 navigate('/admin/dashboard/services')
             }

@@ -18,7 +18,7 @@ const Profile = () => {
         const fetchProfileUrl = async () => {
             try {
                 setIsLoading(true);
-                const response = await axios.get('/api/admin/profile-url');
+                const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/admin/profile-url`);
                 if (response.data) {
                     setUsername(response.data.username)
                     setPassword(response.data.password)
@@ -44,7 +44,7 @@ const Profile = () => {
         }
         else {
             try {
-                const response = await axios.put('/api/admin/edit-adminprofile', { username, password });
+                const response = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/admin/edit-adminprofile`, { username, password });
                 if (response.data.success) {
                     setIsLoading(false);
                     toast.success('Information Updated Successfully!', {

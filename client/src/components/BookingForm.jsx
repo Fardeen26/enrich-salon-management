@@ -48,7 +48,7 @@ const BookingForm = () => {
         let currVal = e.target.value;
 
         try {
-            let servicedata = await axios.get('https://enrich-hair-salon.onrender.com/api/service-data');
+            let servicedata = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/service-data`);
             if (servicedata.data) {
                 setAllService(servicedata.data);
                 servicedata.data.map((item) => {
@@ -65,7 +65,7 @@ const BookingForm = () => {
 
     const onSubmit = async () => {
         try {
-            const orderResponce = await axios.post('/api/checkout', formData);
+            const orderResponce = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/checkout`, formData);
             if (orderResponce.data) {
                 let order = orderResponce.data;
                 const options = {
@@ -76,7 +76,7 @@ const BookingForm = () => {
                     description: formData.service,
                     image: avatar2,
                     order_id: order.id,
-                    callback_url: "/api/paymentverification",
+                    callback_url: `${import.meta.env.VITE_BACKEND_URL}/api/paymentverification`,
                     prefill: {
                         name: formData.name,
                         email: formData.email,

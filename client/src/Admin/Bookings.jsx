@@ -21,7 +21,7 @@ const Bookings = () => {
     useEffect(() => {
         const fetchBookings = async () => {
             try {
-                const response = await axios.get('/api/admin/all-bookings');
+                const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/admin/all-bookings`);
                 const formattedBookings = response.data.map((booking) => ({
                     ...booking,
                     id: booking._id,

@@ -15,7 +15,7 @@ const Services = () => {
     useEffect(() => {
         const fetchServices = async () => {
             try {
-                const response = await axios.get('/api/admin/all-services');
+                const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/admin/all-services`);
                 if (response.data) {
                     setServices(response.data)
                 }

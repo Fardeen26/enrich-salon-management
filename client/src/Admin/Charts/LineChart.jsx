@@ -17,7 +17,7 @@ const LineChart = () => {
   useEffect(() => {
     const getMonthlyBookings = async () => {
       try {
-        const responce = await axios.get('/api/admin/monthly-bookings');
+        const responce = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/admin/monthly-bookings`);
         if (responce.data) {
           let tempArray = [];
           let tempArray2 = [];

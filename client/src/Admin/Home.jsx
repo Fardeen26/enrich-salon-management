@@ -32,7 +32,7 @@ const Home = () => {
     useEffect(() => {
         const bookingCountData = async () => {
             try {
-                const responce = await axios.get('/api/admin/booking-count');
+                const responce = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/admin/booking-count`);
                 if (responce.data)
                     setBookingCount(responce.data)
             } catch (error) {
@@ -42,7 +42,7 @@ const Home = () => {
 
         const totalIncome = async () => {
             try {
-                const responce = await axios.get('/api/admin/total-revenue');
+                const responce = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/admin/total-revenue`);
                 if (responce.data)
                     setTotalIncome(responce.data)
             } catch (error) {
@@ -52,7 +52,7 @@ const Home = () => {
 
         const totalServices = async () => {
             try {
-                const responce = await axios.get('/api/admin/total-services');
+                const responce = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/admin/total-services`);
                 if (responce.data)
                     setTotalServices(responce.data);
             } catch (error) {
@@ -62,7 +62,7 @@ const Home = () => {
 
         const totalCustomer = async () => {
             try {
-                const responce = await axios.get('/api/admin/total-customers');
+                const responce = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/admin/total-customers`);
                 if (responce.data)
                     setTotalCustomer(responce.data);
             } catch (error) {
@@ -72,7 +72,7 @@ const Home = () => {
 
         const servicesCount = async () => {
             try {
-                const responce = await axios.get('/api/admin/services-count')
+                const responce = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/admin/services-count`)
                 if (responce.data) {
                     const data = responce.data;
 
@@ -106,7 +106,7 @@ const Home = () => {
 
         const recentBookings = async () => {
             try {
-                const responce = await axios.get('/api/admin/recent-bookings');
+                const responce = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/admin/recent-bookings`);
                 if (responce.data) {
                     const formattedBookings = responce.data.map((recentBookings) => ({
                         ...recentBookings,
