@@ -97,6 +97,25 @@
     --border-width: 5px;
 }
 
+@media screen and (max-width: 800px) {
+
+    .hero-desc {
+        font-size: 9px !important;
+        word-wrap: break-word !important;
+        white-space: wrap !important;
+        margin-top: 5px !important;
+    }
+
+    .hero-btn-container {
+        margin-top: 5px !important;
+    }
+
+    .hero-btn {
+        font-size: 12px !important;
+        padding: 8px 12px !important;
+    }
+}
+
 @media screen and (max-width: 600px) {
 
     .text-container {
@@ -125,16 +144,16 @@
 
     .text-container {
         top: 121px !important;
-        left: 40px !important;
+        left: 35px !important;
     }
 
     .home-image {
-        height: 220px !important;
+        height: 210px !important;
     }
 
     .hero-heading {
         letter-spacing: 1px !important;
-        font-size: 28px !important;
+        font-size: 25px !important;
     }
 
     .hero-desc {
@@ -148,4 +167,29 @@
     }
 }
 
-/* then alarm vendor install mobile oil fury volume cousin labor piece bunker */
+@media screen and (max-width: 390px) {
+
+    .text-container {
+        top: 121px !important;
+        left: 35px !important;
+    }
+
+    .home-image {
+        height: 200px !important;
+    }
+
+    .hero-heading {
+        letter-spacing: 1px !important;
+        font-size: 21px !important;
+    }
+
+    .hero-desc {
+        font-size: 8px !important;
+        letter-spacing: .8px !important;
+    }
+
+    .hero-btn {
+        --border-width: 2px !important;
+        font-size: 14px;
+    }
+}
