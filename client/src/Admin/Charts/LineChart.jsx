@@ -3,7 +3,6 @@ import { LineChart as MuiLineChart } from '@mui/x-charts/LineChart';
 import axios from 'axios';
 
 const LineChart = () => {
-
   const [lineChartWidh, setLineChartWidth] = useState(1200);
   const [lineChartMargins, setLineChartMargins] = useState({
     left: 40,

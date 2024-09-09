@@ -130,7 +130,6 @@ const Home = () => {
 
     return (
         <div className="content h-full max-ms:p-4 max-sm:p-2 mt-5">
-
             <div className="states flex justify-center max-lg:flex-wrap max-md:flex-wrap">
                 <div className='border rounded-2xl w-[18.5vw] h-[170px] max-lg:w-[40vw] max-sm:w-screen min-w-[170px] max-lg:mr-4 max-sm:mr-0 max-2xl:mr-4 mr-4 shadow'>
                     <StateBox icon={<PeopleIcon className='text-white' />} iconBGColor="red" title="Total Bookings" value={bookingCount} currency={false} />
@@ -172,7 +171,6 @@ const Home = () => {
                     </div>
                 </div>
             </div>
-
         </div>
     )
 }

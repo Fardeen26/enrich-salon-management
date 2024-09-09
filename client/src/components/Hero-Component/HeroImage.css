@@ -13,15 +13,9 @@
 
 .text-container {
     position: absolute !important;
-    /* font-family: "Sedan SC", serif; */
 }
 
 .hero-heading {
-    /* font-family: "Mukta Malar", sans-serif; */
-    /* font-family: "Sedan SC", serif; */
-    /* font-family: "Heebo", sans-serif !important; */
-    /* font-family: "Merriweather Sans", sans-serif; */
-    /* font-family: "Mate", serif; */
     letter-spacing: 2px;
     font-family: "Cinzel", serif;
     font-weight: 600;
