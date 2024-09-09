@@ -19,7 +19,7 @@ const AdminLogin = () => {
             const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/admin/login`, { username, password }, { withCredentials: true });
             console.log(response);
             if (response.data.success) {
-                navigate('/admin/dashboard');
+                navigate('/admin/dashboard', { replace: true });
             } else {
                 setError(response.data.message);
             }

@@ -23,6 +23,7 @@ const AdminRoute = () => {
     const checkAuth = async () => {
       try {
         const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/admin/check-auth`);
+        console.log("main.jsx :- ", response)
         setIsLoggedIn(response.data.isLoggedIn);
       } catch (err) {
         console.error('Error checking authentication status', err);
