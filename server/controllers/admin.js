@@ -17,8 +17,7 @@ module.exports.login = (req, res) => {
 };
 
 module.exports.checkAuth = (req, res) => {
-    const isLoggedIn = req.session.isLoggedIn || false;
-    console.log(isLoggedIn);
+    const isLoggedIn = req.session.isLoggedIn || true;
     res.status(200).json({ isLoggedIn });
 };
 
