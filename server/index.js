@@ -14,7 +14,7 @@ const paymentRouter = require('./routes/paymentRoutes.js')
 const adminRouter = require('./routes/adminRoutes.js')
 
 app.use(cors({
-  origin: process.env.FRONT_END_URL,
+  origin: 'http://localhost:5173',
   credentials: true
 }));
 
@@ -49,6 +49,12 @@ app.use(
     },
   })
 );
+
+app.use((req, res, next) => {
+  console.log("Session Data:", req.session);
+  console.log("Cookies:", req.cookies);
+  next();
+});
 
 app.use('/api', dataRouter);
 app.use('/api', paymentRouter);
