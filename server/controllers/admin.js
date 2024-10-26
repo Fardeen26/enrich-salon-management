@@ -10,29 +10,43 @@ module.exports.login = (req, res) => {
 
     if (isAuthenticated) {
         req.session.isLoggedIn = true;
-        return res.status(200).json({ success: true });
+        req.session.save((err) => {
+            if (err) {
+                return res.status(500).send("Session save error");
+            }
+            return res.status(200).json({ success: true });
+        });
+    } else {
+        return res.json({ success: false, message: "Invalid Credentials" });
     }
-
-    res.json({ success: false, message: "Invalid Credentials" });
 };
+
 
 module.exports.checkAuth = (req, res) => {
-    const isLoggedIn = req.session.isLoggedIn || true;
-    res.status(200).json({ isLoggedIn });
+    const isLoggedIn = req.session?.isLoggedIn || false;
+    return res.status(200).json({ isLoggedIn });
 };
 
+
 module.exports.logout = (req, res) => {
-    req.session.isLoggedIn = false;
-    res.status(200).json({ success: true })
-}
+    req.session.destroy((err) => {
+        if (err) {
+            return res.status(500).send("Logout failed");
+        }
+        res.clearCookie("connect.sid");
+        return res.status(200).json({ success: true });
+    });
+};
+
 
 // Authentication middleware
 module.exports.checkAuthMiddleware = (req, res, next) => {
-    if (req.session.isLoggedIn) {
+    if (req.session && req.session.isLoggedIn) {
         return next();
     }
-    res.json({ success: false, error: 'You are Unauthorized' });
+    return res.status(401).json({ success: false, error: 'You are Unauthorized' });
 };
+
 
 // Booking Count
 module.exports.BookingsCount = async (req, res) => {

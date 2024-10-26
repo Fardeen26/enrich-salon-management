@@ -23,7 +23,7 @@ const payments = new Map();
 module.exports.paymentVerification = async (req, res) => {
     const payment = payments.get(req.body.razorpay_payment_id);
 
-    if (!payment.notes) {
+    if (!payment) {
         res.redirect(process.env.PAYMENT_FAILURE_URL);
     }
 

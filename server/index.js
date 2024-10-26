@@ -6,6 +6,7 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const session = require('express-session')
+const MongoDBStore = require("connect-mongodb-session")(session);
 const cookieParser = require('cookie-parser');
 
 const dataRouter = require('./routes/dataRoutes.js');
@@ -30,16 +31,24 @@ async function main() {
   await mongoose.connect(dburl);
 }
 
-app.use(session({
-  secret: process.env.SESSION_SECRET,
-  resave: false,
-  saveUninitialized: true,
-  cookie: {
-    expires: Date.now + 7 * 24 * 60 * 60 * 1000,
-    maxAge: 7 * 24 * 60 * 60 * 1000,
-    httpOnly: true,
-  },
-}))
+const store = new MongoDBStore({
+  uri: process.env.MONGO_ATLAS_URL,
+  collection: "sessions",
+});
+
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    store: store,
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24,
+      sameSite: "none",
+      secure: true,
+    },
+  })
+);
 
 app.use('/api', dataRouter);
 app.use('/api', paymentRouter);
