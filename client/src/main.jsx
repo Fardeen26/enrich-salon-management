@@ -25,7 +25,7 @@ const AdminRoute = () => {
         const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/admin/check-auth`, {
           withCredentials: true,
         });
-        setIsLoggedIn(response.data.isLoggedIn);
+        setIsLoggedIn(response.data.isLoggedIn)
       } catch (err) {
         console.error('Error checking authentication status', err);
       } finally {
