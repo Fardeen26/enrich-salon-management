@@ -14,7 +14,7 @@ const paymentRouter = require('./routes/paymentRoutes.js')
 const adminRouter = require('./routes/adminRoutes.js')
 
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: process.env.FRONT_END_URL,
   credentials: true
 }));
 
