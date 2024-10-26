@@ -22,7 +22,9 @@ const AdminRoute = () => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/admin/check-auth`);
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/admin/check-auth`, {
+          withCredentials: true,
+        });
         setIsLoggedIn(response.data.isLoggedIn);
       } catch (err) {
         console.error('Error checking authentication status', err);
@@ -37,6 +39,7 @@ const AdminRoute = () => {
   if (loading) return <Loader />;
   return isLoggedIn ? <AdminDashboard /> : <Navigate to="/admin/login" />;
 };
+
 
 const router = createBrowserRouter([
   {
