@@ -84,7 +84,7 @@ function Footer() {
                       ) : (
                         <Typography
                           as="a"
-                          href={link === 'Book A Seat' ? 'http://localhost:5173/book' : '#'}
+                          href={link === 'Book A Seat' ? 'https://enrich-hair-salon.vercel.app/' : '#'}
                           color="gray"
                           className="py-1.5 font-normal transition-colors hover:text-blue-gray-900 max-sm:text-xs"
                         >

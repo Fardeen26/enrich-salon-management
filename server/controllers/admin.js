@@ -3,39 +3,43 @@ const Booking = require('../models/Booking');
 const Service = require('../models/service');
 const Services = require('../models/service');
 
-// Admin Authentication
+
 module.exports.login = (req, res) => {
     const { username, password } = req.body;
-    const isAuthenticated = username === adminCredentials.username && password === adminCredentials.password;
 
-    if (isAuthenticated) {
+    if (username === adminCredentials.username && password === adminCredentials.password) {
         req.session.isLoggedIn = true;
         req.session.save((err) => {
             if (err) {
-                return res.status(500).send("Session save error");
+                return res.status(500).json({ success: false, message: "Failed to save session" });
             }
             return res.status(200).json({ success: true });
         });
     } else {
-        return res.json({ success: false, message: "Invalid Credentials" });
+        return res.status(401).json({ success: false, message: "Invalid Credentials" });
     }
 };
-
 
 module.exports.checkAuth = (req, res) => {
     const isLoggedIn = req.session?.isLoggedIn || false;
     return res.status(200).json({ isLoggedIn });
 };
 
-
 module.exports.logout = (req, res) => {
     req.session.destroy((err) => {
         if (err) {
-            return res.status(500).send("Logout failed");
+            return res.status(500).json({ success: false, message: "Failed to logout" });
         }
         res.clearCookie("connect.sid");
         return res.status(200).json({ success: true });
     });
+};
+
+module.exports.checkAuthMiddleware = (req, res, next) => {
+    if (req.session && req.session.isLoggedIn) {
+        return next();
+    }
+    return res.status(401).json({ success: false, message: "Unauthorized" });
 };
 
 

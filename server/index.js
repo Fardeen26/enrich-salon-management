@@ -40,21 +40,15 @@ app.use(
     store: MongoStore.create({
       mongoUrl: process.env.MONGO_ATLAS_URL,
       collectionName: "sessions",
-      stringify: false,
     }),
     cookie: {
-      maxAge: 1000 * 60 * 60 * 24, // 1 day
+      maxAge: 1000 * 60 * 60 * 24,
       sameSite: "none",
-      secure: true,
+      secure: process.env.NODE_ENV === 'production',
+      httpOnly: true
     },
   })
 );
-
-app.use((req, res, next) => {
-  console.log("Session Data:", req.session);
-  console.log("Cookies:", req.cookies);
-  next();
-});
 
 app.use('/api', dataRouter);
 app.use('/api', paymentRouter);

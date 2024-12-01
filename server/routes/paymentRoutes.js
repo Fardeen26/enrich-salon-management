@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const paymentController = require('../controllers/payment');
 const bodyParser = require('body-parser');
-const bookingSchema = require('../authentication/bookingSchema')
+const bookingSchema = require('../schema/bookingSchema')
 const { validateBooking } = require('../middleware')
 
 router.post('/demo-booking', bodyParser.json(), paymentController.creatingBooking)
