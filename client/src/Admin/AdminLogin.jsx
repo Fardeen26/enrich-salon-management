@@ -17,16 +17,17 @@ const AdminLogin = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
+
         try {
-            const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/admin/login`, { username, password }, { withCredentials: true });
-            if (response.data.success) {
-                navigate('/admin/dashboard', { replace: true });
-            } else {
-                setError(response.data.message);
-            }
-        } catch (error) {
-            setIsLoading(false);
-            console.error("An Error Occurred", error)
+            const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/admin/login`, {
+                username,
+                password
+            });
+
+            localStorage.setItem('token', res.data.token);
+            navigate('/admin/dashboard', { replace: true });
+        } catch (err) {
+            setError("Invalid credentials");
         } finally {
             setIsLoading(false);
         }

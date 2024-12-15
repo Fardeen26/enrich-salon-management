@@ -68,14 +68,8 @@ const NavBar = ({ windowWidth, isMenuOpen, handleOpenUserMenu, handleCloseUserMe
     }, []);
 
     const handleLogout = async () => {
-        try {
-            const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/admin/logout`);
-            if (response.data.success) {
-                navigate('/admin/login')
-            }
-        } catch (error) {
-            console.error('An Error Occurred', error);
-        }
+        localStorage.removeItem('token');
+        navigate('/admin/login')
     }
 
     return (
