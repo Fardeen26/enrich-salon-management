@@ -1,28 +1,29 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios';
 import { Toaster, toast } from 'sonner';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 const Profile = () => {
     const [username, setUsername] = useState('')
-    const [password, setPassword] = useState('')
-    const [password2, setPassword2] = useState('')
-    const [profileUrl, setProfileUrl] = useState('')
+    const [email, setEmail] = useState('')
+    const [profilePic, setProfilePic] = useState('')
+    const [id, setId] = useState(null)
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const [isPasswordHidden, setIsPasswordHidden] = useState(true)
-    const [isPasswordHidden2, setIsPasswordHidden2] = useState(true)
 
     useEffect(() => {
         const fetchProfileUrl = async () => {
+            const token = localStorage.getItem('token');
             try {
                 setIsLoading(true);
-                const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/admin/profile-url`);
+                const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/admin/admin-profile`, {
+                    headers: { Authorization: token }
+                });
                 if (response.data) {
+                    console.log(response.data)
                     setUsername(response.data.username)
-                    setPassword(response.data.password)
-                    setProfileUrl(response.data.profilePic)
+                    setEmail(response.data.email)
+                    setProfilePic(response.data.profilePic)
+                    setId(response.data._id)
                 }
             } catch (error) {
                 console.error('An Error Occurred:', error);
@@ -36,35 +37,29 @@ const Profile = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setIsLoading(true);
-        let rewritedPassword = e.target[2].value;
-        if (password != rewritedPassword) {
-            setError('Your Password is not matched!');
-            setIsLoading(false);
-        }
-        else {
-            try {
-                const response = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/admin/edit-adminprofile`, { username, password });
-                if (response.data.success) {
-                    setIsLoading(false);
-                    toast.success('Information Updated Successfully!', {
-                        className: 'p-3',
-                        duration: 3000,
-                    });
-                }
-            } catch (error) {
-                console.error("An Error Occurred", error);
+        setIsLoading(true)
+        try {
+            const response = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/admin/edit-adminprofile`, { id, username, email, profilePic });
+            if (response.data.success) {
+                toast.success('Information Updated Successfully!', {
+                    className: 'p-3',
+                    duration: 3000,
+                });
             }
+        } catch (error) {
+            setError(error.message)
+        } finally {
+            setIsLoading(false);
         }
     }
 
     return (
-        <div className="">
-            <div className='flex flex-wrap p-4 justify-center'>
+        <div>
+            <div className='flex flex-wrap p-4 justify-center items-center'>
                 <Toaster richColors position="top-center" visibleToasts={1} />
                 <div className='w-96 max-sm:w-full flex max-2xl:justify-start max-lg:justify-center max-sm:justify-center'>
                     <div className="z-20">
-                        <img src={profileUrl} alt="" className='w-72 h-72' />
+                        <img src={profilePic} alt="profile-url" className='w-72 h-72 rounded-lg' />
                     </div>
                 </div>
                 <div className='w-96 max-sm:w-full'>
@@ -80,34 +75,31 @@ const Profile = () => {
                                 className='bg-black text-white p-2 border rounded w-full' />
                         </div>
                         <div className='py-2'>
-                            <label htmlFor='password' className='block mb-2 text-sm font-medium dark:text-white text-black'>Password</label>
+                            <label htmlFor='password' className='block mb-2 text-sm font-medium dark:text-white text-black'>Email</label>
                             <div className="relative">
                                 <input
-                                    type={`${isPasswordHidden ? 'password' : 'text'}`}
-                                    name='password'
-                                    value={password}
-                                    placeholder="password"
-                                    onChange={(e) => setPassword(e.target.value)}
+                                    name='email'
+                                    value={email}
+                                    placeholder="email"
+                                    onChange={(e) => setEmail(e.target.value)}
                                     className='bg-black text-white p-2 border rounded w-full'
                                     required />
-                                <span className='absolute text-white right-4 top-2' onClick={() => setIsPasswordHidden(!isPasswordHidden)}>{isPasswordHidden ? <VisibilityIcon sx={{ fontSize: '20px' }} /> : <VisibilityOffIcon sx={{ fontSize: '20px' }} />}</span>
                             </div>
                         </div>
                         <div className='py-2'>
-                            <label htmlFor='password2' className='block mb-2 text-sm font-medium dark:text-white text-black'>Enter Again</label>
+                            <label htmlFor='password' className='block mb-2 text-sm font-medium dark:text-white text-black'>Profile Picture</label>
                             <div className="relative">
                                 <input
-                                    type={`${isPasswordHidden2 ? 'password' : 'text'}`}
-                                    name='password2'
-                                    placeholder="Enter password Again"
-                                    onChange={(e) => setPassword2(e.target.value)}
+                                    name='profilePic'
+                                    value={profilePic}
+                                    placeholder="email"
+                                    onChange={(e) => setProfilePic(e.target.value)}
                                     className='bg-black text-white p-2 border rounded w-full'
                                     required />
-                                <span className='absolute text-white right-4 top-2' onClick={() => setIsPasswordHidden2(!isPasswordHidden2)}>{isPasswordHidden2 ? <VisibilityIcon sx={{ fontSize: '20px' }} /> : <VisibilityOffIcon sx={{ fontSize: '20px' }} />}</span>
                             </div>
                         </div>
                         {error && (<p className='text-red-500 text-sm'>{error}</p>)}
-                        <button type="submit" className='bg-blue-500 text-white p-2 mt-3 rounded w-full'>{isLoading ? 'Loading...' : 'Edit'}</button>
+                        <button type="submit" className='bg-blue-500 text-white p-2 mt-3 rounded w-full'>{isLoading ? 'Loading...' : 'Edit Details'}</button>
                     </form>
                 </div>
             </div>

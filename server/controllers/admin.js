@@ -199,17 +199,21 @@ module.exports.deleteService = async (req, res) => {
 };
 
 // Admon Profile Img URL
-module.exports.profileUrl = async (req, res) => {
-    const { username, password, profilePic } = adminCredentials;
-    res.status(200).json({ username, password, profilePic });
+module.exports.adminProfile = async (req, res) => {
+    try {
+        const adminData = await Admin.findOne({ username: 'fardeen mansuri' });
+        res.status(200).json(adminData);
+    } catch (error) {
+        console.log(error)
+        res.status(501).json({ error: true, message: 'Error fetching admin detail' });
+    }
 };
 
 // Edit Admin Profile
 module.exports.editAdminProfile = async (req, res) => {
     try {
-        const { username, password } = req.body;
-        adminCredentials.username = username;
-        adminCredentials.password = password;
+        const { id, username, email, profilePic } = req.body;
+        const updated = await Admin.findByIdAndUpdate(id, { username, email, profilePic })
         res.status(200).json({ success: true });
     } catch (error) {
         res.status(500).json({ error: true, message: 'Error updating admin credentials' });

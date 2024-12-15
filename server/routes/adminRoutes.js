@@ -18,7 +18,7 @@ router.get('/all-bookings', adminController.allBookings);
 router.get('/recent-bookings', adminController.recentBookings);
 router.get('/services-count', adminController.servicesCount);
 router.get('/all-services', adminController.allServices);
-router.get('/profile-url', adminController.profileUrl);
+router.get('/admin-profile', verifyToken, adminController.adminProfile);
 router.get('/service-formdata/:id', adminController.serviceFormData);
 router.get('/monthly-bookings', adminController.monthlyBookings);
 
