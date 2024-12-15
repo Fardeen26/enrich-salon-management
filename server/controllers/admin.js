@@ -1,56 +1,35 @@
+const Admin = require('../models/Admin');
 const adminCredentials = require('../models/Admin');
 const Booking = require('../models/Booking');
 const Service = require('../models/service');
 const Services = require('../models/service');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 
-module.exports.login = (req, res) => {
+module.exports.login = async (req, res) => {
     const { username, password } = req.body;
+    const adminUser = await Admin.findOne({ username: 'fardeen mansuri' });
 
-    if (username === adminCredentials.username && password === adminCredentials.password) {
-        req.session.isLoggedIn = true;
-        req.session.save((err) => {
-            if (err) {
-                return res.status(500).json({ success: false, message: "Failed to save session" });
-            }
-            return res.status(200).json({ success: true });
-        });
-    } else {
-        return res.status(401).json({ success: false, message: "Invalid Credentials" });
+    if (username !== adminUser.username) {
+        return res.status(401).json({ message: "Invalid username or password" });
     }
-};
 
-module.exports.checkAuth = (req, res) => {
-    const isLoggedIn = req.session?.isLoggedIn || false;
-    return res.status(200).json({ isLoggedIn });
-};
+    const isPasswordCorrect = await bcrypt.compare(password, adminUser.password);
+    if (!isPasswordCorrect) {
+        return res.status(401).json({ message: "Invalid username or password" });
+    }
 
-module.exports.logout = (req, res) => {
-    req.session.destroy((err) => {
-        if (err) {
-            return res.status(500).json({ success: false, message: "Failed to logout" });
-        }
-        res.clearCookie("connect.sid");
-        return res.status(200).json({ success: true });
+    const token = jwt.sign({ username: adminUser.username }, process.env.JWT_SECRET, {
+        expiresIn: process.env.JWT_EXPIRY
     });
-};
 
-module.exports.checkAuthMiddleware = (req, res, next) => {
-    if (req.session && req.session.isLoggedIn) {
-        return next();
-    }
-    return res.status(401).json({ success: false, message: "Unauthorized" });
-};
+    res.json({ token });
+}
 
-
-// Authentication middleware
-module.exports.checkAuthMiddleware = (req, res, next) => {
-    if (req.session && req.session.isLoggedIn) {
-        return next();
-    }
-    return res.status(401).json({ success: false, error: 'You are Unauthorized' });
-};
-
+module.exports.adminDashboard = (req, res) => {
+    res.status(200).json({ authorized: true });
+}
 
 // Booking Count
 module.exports.BookingsCount = async (req, res) => {

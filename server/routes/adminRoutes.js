@@ -1,17 +1,15 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const adminController = require('../controllers/admin');
-const router = express.Router();
+const { verifyToken } = require('../middleware');
 
+const router = express.Router();
 const jsonParser = bodyParser.json();
 
 router.post('/login', jsonParser, adminController.login);
 
-// Middleware to protect routes
-router.use(adminController.checkAuthMiddleware);
-
 // Authenticated routes
-router.get('/check-auth', adminController.checkAuth);
+router.get('/dashboard', verifyToken, adminController.adminDashboard)
 router.get('/booking-count', adminController.BookingsCount);
 router.get('/total-revenue', adminController.TotalRevenue);
 router.get('/total-services', adminController.totalServices);
@@ -27,7 +25,6 @@ router.get('/monthly-bookings', adminController.monthlyBookings);
 // Admin actions
 router.post('/edit-service/:id', jsonParser, adminController.editService);
 router.post('/create-service', jsonParser, adminController.createService);
-router.post('/logout', adminController.logout);
 router.put('/edit-adminprofile', jsonParser, adminController.editAdminProfile);
 router.delete('/delete-service/:id', adminController.deleteService);
 

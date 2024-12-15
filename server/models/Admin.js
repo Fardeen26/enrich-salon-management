@@ -1,7 +1,23 @@
-const adminCredentials = {
-    username: process.env.ADMIN_USERNAME,
-    password: process.env.ADMIN_PASSWORD,
-    profilePic: process.env.PROFILE_PIC_URL
-};
+const { default: mongoose } = require("mongoose")
+const Schema = mongoose.Schema;
 
-module.exports = adminCredentials;
+const adminSchema = new Schema({
+    username: {
+        type: String,
+        required: true
+    },
+    email: {
+        type: String,
+        required: true
+    },
+    password: {
+        type: String,
+        required: true
+    },
+    profilePic: {
+        type: String,
+    }
+});
+
+const Admin = mongoose.model('Admin', adminSchema);
+module.exports = Admin;

@@ -5,13 +5,11 @@ const mongoose = require('mongoose');
 const express = require('express');
 const cors = require('cors');
 const app = express();
-const MongoStore = require('connect-mongo');
-const session = require('express-session')
 const cookieParser = require('cookie-parser');
 
 const dataRouter = require('./routes/dataRoutes.js');
 const paymentRouter = require('./routes/paymentRoutes.js')
-const adminRouter = require('./routes/adminRoutes.js')
+const adminRouter = require('./routes/adminRoutes.js');
 
 app.use(cors({
   origin: process.env.FRONT_END_URL,
@@ -31,29 +29,9 @@ async function main() {
   await mongoose.connect(dburl);
 }
 
-
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    store: MongoStore.create({
-      mongoUrl: process.env.MONGO_ATLAS_URL,
-      collectionName: "sessions",
-    }),
-    cookie: {
-      maxAge: 1000 * 60 * 60 * 24,
-      sameSite: "none",
-      secure: process.env.NODE_ENV === 'production',
-      httpOnly: true
-    },
-  })
-);
-
 app.use('/api', dataRouter);
 app.use('/api', paymentRouter);
 app.use('/api/admin', adminRouter);
-
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
