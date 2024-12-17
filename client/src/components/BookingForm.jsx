@@ -109,11 +109,11 @@ const BookingForm = () => {
             <div className="bg-emerald-600 w-[45%] max-sm:hidden max-lg:hidden flex justify-center items-center h-screen">
                 <img src={FormImage2} alt="" className="w-[100%]" />
             </div>
-            <section className="text-black max-sm:h-[125vh] max-sm:ml-0 max-lg:ml-0 ml-32 max-[1300px]:ml-24">
-                <div className="flex flex-col items-center justify-center max-sm:px-[5px] px-6 py-8 mx-auto md:h-screen lg:py-0 ">
-                    <div className="w-full lg:max-w-lg bg-black rounded-3xl shadow-gray-400 shadow-2xl dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800">
-                        <div className="p-6 space-y-4 md:space-y-6 sm:p-8 ">
-                            <h1 className="text-xl font-bold leading-tight tracking-tight md:text-2xl text-white">
+            <section className="text-black max-sm:h-fit max-sm:ml-0 max-lg:ml-0 ml-32 max-[1300px]:ml-24">
+                <div className="flex flex-col items-center justify-center max-sm:px-[2px] px-6 py-8 max-sm:py-2 mx-auto md:h-screen lg:py-0 ">
+                    <div className="w-full lg:max-w-lg bg-black rounded-3xl max-sm:rounded-md shadow-gray-400 shadow-2xl dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800">
+                        <div className="p-6 max-sm:py-6 max-sm:px-3 space-y-4 md:space-y-6 sm:p-8 ">
+                            <h1 className="text-xl font-bold leading-tight max-sm:text-center tracking-tight md:text-2xl text-white">
                                 Book Your Seat
                             </h1>
                             <form className="text-black" onSubmit={handleSubmit(onSubmit)}>
