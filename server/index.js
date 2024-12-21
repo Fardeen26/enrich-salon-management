@@ -12,7 +12,7 @@ const paymentRouter = require('./routes/paymentRoutes.js')
 const adminRouter = require('./routes/adminRoutes.js');
 
 app.use(cors({
-  origin: process.env.FRONT_END_URL,
+  origin: [`${process.env.FRONT_END_URL}`, [`${process.env.FRONT_END_URL_2}`]],
   credentials: true
 }));
 
