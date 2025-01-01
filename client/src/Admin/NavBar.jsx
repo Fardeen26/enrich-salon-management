@@ -55,7 +55,7 @@ const NavBar = ({ windowWidth, isMenuOpen, handleOpenUserMenu, handleCloseUserMe
 
         const fetchProfileUrl = async () => {
             try {
-                const response = await axiosClient.get(`/api/admin/profile-url`);
+                const response = await axiosClient.get(`/api/admin/admin-profile`);
                 if (response.data) {
                     setProfileUrl(response.data.profilePic)
                 }

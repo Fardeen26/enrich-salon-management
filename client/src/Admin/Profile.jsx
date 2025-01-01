@@ -17,7 +17,6 @@ const Profile = () => {
                 setIsLoading(true);
                 const response = await axiosClient.get(`/api/admin/admin-profile`);
                 if (response.data) {
-                    console.log(response.data)
                     setUsername(response.data.username)
                     setEmail(response.data.email)
                     setProfilePic(response.data.profilePic)
