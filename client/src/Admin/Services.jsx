@@ -4,18 +4,19 @@ import { Link, useLocation } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
 import Grid3x3Icon from '@mui/icons-material/Grid3x3';
 import { Toaster, toast } from 'sonner';
-import axios from 'axios';
+import apiClient from '../utils/apiClient';
 
 const Services = () => {
     const [services, setServices] = useState([]);
     const [sonner, setSonner] = useState(false);
     const [pathKey, setPathKey] = useState("11111111");
     const location = useLocation();
+    const axiosClient = apiClient();
 
     useEffect(() => {
         const fetchServices = async () => {
             try {
-                const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/admin/all-services`);
+                const response = await axiosClient.get(`/api/admin/all-services`);
                 if (response.data) {
                     setServices(response.data)
                 }

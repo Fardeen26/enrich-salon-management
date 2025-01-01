@@ -12,8 +12,8 @@ import Stack from '@mui/material/Stack';
 import './Admin.css'
 import { Badge, Divider, Popover } from '@mui/material';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
-import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import apiClient from '../utils/apiClient';
 
 
 // eslint-disable-next-line react/prop-types
@@ -25,6 +25,7 @@ const NavBar = ({ windowWidth, isMenuOpen, handleOpenUserMenu, handleCloseUserMe
     const [profileUrl, setProfileUrl] = useState('')
 
     const navigate = useNavigate();
+    const axiosClient = apiClient();
 
     const handleClick = (event) => {
         setPopAnchorEl(event.currentTarget);
@@ -43,7 +44,7 @@ const NavBar = ({ windowWidth, isMenuOpen, handleOpenUserMenu, handleCloseUserMe
     useEffect(() => {
         const recentBookings = async () => {
             try {
-                const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/admin/recent-bookings`);
+                const response = await axiosClient.get(`/api/admin/recent-bookings`);
                 if (response.data) {
                     setNotifications(response.data);
                 }
@@ -54,7 +55,7 @@ const NavBar = ({ windowWidth, isMenuOpen, handleOpenUserMenu, handleCloseUserMe
 
         const fetchProfileUrl = async () => {
             try {
-                const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/admin/profile-url`);
+                const response = await axiosClient.get(`/api/admin/profile-url`);
                 if (response.data) {
                     setProfileUrl(response.data.profilePic)
                 }

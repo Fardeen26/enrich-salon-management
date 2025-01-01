@@ -1,13 +1,14 @@
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import apiClient from '../utils/apiClient';
 
 // eslint-disable-next-line react/prop-types
 const ServiceBox = ({ icon, serviceName, price, iconBGColor, _id }) => {
     const navigate = useNavigate();
+    const axiosClient = apiClient();
     const handleSubmit = async () => {
         try {
-            const responce = await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/admin/delete-service/${_id}`);
+            const responce = await axiosClient.delete(`/api/admin/delete-service/${_id}`);
             if (responce.data.success) {
                 navigate('/admin/dashboard/services')
             }

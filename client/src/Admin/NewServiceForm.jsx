@@ -1,18 +1,19 @@
-import axios from 'axios';
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import apiClient from '../utils/apiClient';
 
 const NewServiceForm = () => {
     const [serviceName, setServiceName] = useState('');
     const [price, setPrice] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
+    const axiosClient = apiClient();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
         try {
-            const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/admin/create-service`, { serviceName, price });
+            const response = await axiosClient.post(`/api/admin/create-service`, { serviceName, price });
             if (response.data)
                 navigate('/admin/dashboard/services')
         } catch (error) {

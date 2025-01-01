@@ -1,6 +1,6 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import apiClient from '../utils/apiClient';
 
 const EditServiceForm = () => {
     const [serviceName, setServiceName] = useState("");
@@ -8,23 +8,27 @@ const EditServiceForm = () => {
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
     const { id } = useParams();
+    const axiosClient = apiClient();
 
     useEffect(() => {
-        try {
-            axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/admin/service-formdata/${id}`).then(res => {
-                setServiceName(res.data.serviceName);
-                setServicePrice(res.data.price);
-            })
-        } catch (error) {
-            console.error("An Error Occurred", error);
+        const fetchService = async () => {
+            try {
+                const response = await axiosClient.get(`/api/admin/service-formdata/${id}`);
+                setServiceName(response.data.serviceName);
+                setServicePrice(response.data.price);
+            } catch (error) {
+                console.error("An Error Occurred", error);
+            }
         }
+
+        fetchService();
     }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true)
         try {
-            const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/admin/edit-service/${id}`, { serviceName, servicePrice });
+            const response = await axiosClient.post(`/api/admin/edit-service/${id}`, { serviceName, servicePrice });
             if (response.data.success) {
                 navigate('/admin/dashboard/services');
             }

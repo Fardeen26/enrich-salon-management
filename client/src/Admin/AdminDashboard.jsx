@@ -27,12 +27,9 @@ const AdminDashboard = () => {
       }
 
       try {
-        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/admin/dashboard`, {
+        await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/admin/dashboard`, {
           headers: { Authorization: token }
         });
-        if (res.data.authorized) {
-          console.log("authorized")
-        }
       } catch (err) {
         localStorage.removeItem('token');
         navigate("/admin/login")

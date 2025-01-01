@@ -8,8 +8,10 @@ const jsonParser = bodyParser.json();
 
 router.post('/login', jsonParser, adminController.login);
 
+router.use(verifyToken);
+
 // Authenticated routes
-router.get('/dashboard', verifyToken, adminController.adminDashboard)
+router.get('/dashboard', adminController.adminDashboard)
 router.get('/booking-count', adminController.BookingsCount);
 router.get('/total-revenue', adminController.TotalRevenue);
 router.get('/total-services', adminController.totalServices);
@@ -18,7 +20,7 @@ router.get('/all-bookings', adminController.allBookings);
 router.get('/recent-bookings', adminController.recentBookings);
 router.get('/services-count', adminController.servicesCount);
 router.get('/all-services', adminController.allServices);
-router.get('/admin-profile', verifyToken, adminController.adminProfile);
+router.get('/admin-profile', adminController.adminProfile);
 router.get('/service-formdata/:id', adminController.serviceFormData);
 router.get('/monthly-bookings', adminController.monthlyBookings);
 

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios';
+import apiClient from '../utils/apiClient';
 import { Toaster, toast } from 'sonner';
 
 const Profile = () => {
@@ -9,15 +9,13 @@ const Profile = () => {
     const [id, setId] = useState(null)
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const axiosClient = apiClient();
 
     useEffect(() => {
         const fetchProfileUrl = async () => {
-            const token = localStorage.getItem('token');
             try {
                 setIsLoading(true);
-                const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/admin/admin-profile`, {
-                    headers: { Authorization: token }
-                });
+                const response = await axiosClient.get(`/api/admin/admin-profile`);
                 if (response.data) {
                     console.log(response.data)
                     setUsername(response.data.username)
@@ -39,7 +37,7 @@ const Profile = () => {
         e.preventDefault();
         setIsLoading(true)
         try {
-            const response = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/admin/edit-adminprofile`, { id, username, email, profilePic });
+            const response = await axiosClient.put(`/api/admin/edit-adminprofile`, { id, username, email, profilePic });
             if (response.data.success) {
                 toast.success('Information Updated Successfully!', {
                     className: 'p-3',

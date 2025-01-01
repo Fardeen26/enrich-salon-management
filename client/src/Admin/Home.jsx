@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import axios from 'axios'
 import Box from '@mui/material/Box';
 import PeopleIcon from '@mui/icons-material/People'
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
@@ -11,6 +10,7 @@ import './Admin.css'
 import PieChart from './Charts/PieChart'
 import LineChart from './Charts/LineChart'
 import DataGrid from './Charts/DataGrid'
+import apiClient from '../utils/apiClient';
 import StateBox from './StateBox';
 
 const Home = () => {
@@ -29,12 +29,14 @@ const Home = () => {
         }]
     });
 
+    const axiosClient = apiClient();
+
     useEffect(() => {
         const bookingCountData = async () => {
             try {
-                const responce = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/admin/booking-count`);
-                if (responce.data)
-                    setBookingCount(responce.data)
+                const response = await axiosClient.get(`/api/admin/booking-count`);
+                if (response.data)
+                    setBookingCount(response.data)
             } catch (error) {
                 console.error("An Error Occurred", error);
             }
@@ -42,9 +44,10 @@ const Home = () => {
 
         const totalIncome = async () => {
             try {
-                const responce = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/admin/total-revenue`);
-                if (responce.data)
-                    setTotalIncome(responce.data)
+                const response = await axiosClient.get(`/api/admin/total-revenue`,
+                );
+                if (response.data)
+                    setTotalIncome(response.data)
             } catch (error) {
                 console.error("An Error Occurred", error);
             }
@@ -52,9 +55,9 @@ const Home = () => {
 
         const totalServices = async () => {
             try {
-                const responce = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/admin/total-services`);
-                if (responce.data)
-                    setTotalServices(responce.data);
+                const response = await axiosClient.get(`/api/admin/total-services`);
+                if (response.data)
+                    setTotalServices(response.data);
             } catch (error) {
                 console.error("An Error Occurred", error);
             }
@@ -62,9 +65,9 @@ const Home = () => {
 
         const totalCustomer = async () => {
             try {
-                const responce = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/admin/total-customers`);
-                if (responce.data)
-                    setTotalCustomer(responce.data);
+                const response = await axiosClient.get(`/api/admin/total-customers`);
+                if (response.data)
+                    setTotalCustomer(response.data);
             } catch (error) {
                 console.error("An Error Occurred", error);
             }
@@ -72,9 +75,9 @@ const Home = () => {
 
         const servicesCount = async () => {
             try {
-                const responce = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/admin/services-count`)
-                if (responce.data) {
-                    const data = responce.data;
+                const response = await axiosClient.get(`/api/admin/services-count`)
+                if (response.data) {
+                    const data = response.data;
 
                     const labels = data.map(item => item.service);
                     const values = data.map(item => item.count);
@@ -106,9 +109,9 @@ const Home = () => {
 
         const recentBookings = async () => {
             try {
-                const responce = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/admin/recent-bookings`);
-                if (responce.data) {
-                    const formattedBookings = responce.data.map((recentBookings) => ({
+                const response = await axiosClient.get(`/api/admin/recent-bookings`);
+                if (response.data) {
+                    const formattedBookings = response.data.map((recentBookings) => ({
                         ...recentBookings,
                         id: recentBookings._id,
                         date: format(new Date(recentBookings.date), 'MMMM dd, yyyy')

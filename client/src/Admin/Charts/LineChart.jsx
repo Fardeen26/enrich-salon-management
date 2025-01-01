@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { LineChart as MuiLineChart } from '@mui/x-charts/LineChart';
-import axios from 'axios';
+import apiClient from '../../utils/apiClient';
 
 const LineChart = () => {
   const [lineChartWidh, setLineChartWidth] = useState(1200);
@@ -12,11 +12,12 @@ const LineChart = () => {
   })
   const [lineXAxisData, setLineXAxisData] = useState([]);
   const [lineSeriesData, setLineSeriesData] = useState([]);
+  const axiosClient = apiClient();
 
   useEffect(() => {
     const getMonthlyBookings = async () => {
       try {
-        const responce = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/admin/monthly-bookings`);
+        const responce = await axiosClient.get(`/api/admin/monthly-bookings`);
         if (responce.data) {
           let tempArray = [];
           let tempArray2 = [];

@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { Box } from '@mui/material';
-import axios from 'axios';
 import { format } from 'date-fns';
+import apiClient from '../utils/apiClient';
 
 const columns = [
     { field: 'id', headerName: 'ID', width: 90 },
@@ -17,11 +17,11 @@ const columns = [
 
 const Bookings = () => {
     const [bookings, setBookings] = useState([]);
-
+    const axiosClient = apiClient();
     useEffect(() => {
         const fetchBookings = async () => {
             try {
-                const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/admin/all-bookings`);
+                const response = await axiosClient.get('/api/admin/all-bookings');
                 const formattedBookings = response.data.map((booking) => ({
                     ...booking,
                     id: booking._id,
