@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import axios from 'axios';
 import avatar2 from '../assets/avatar-2.avif'
 import FormImage2 from "../assets/salon-img-form3.jpeg";
+import { toast, Toaster } from 'sonner';
 import './bookingForm.css'
 
 const BookingForm = () => {
@@ -66,6 +67,7 @@ const BookingForm = () => {
     const onSubmit = async () => {
         try {
             const orderResponce = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/checkout`, formData);
+            // console.log(orderResponce);
             if (orderResponce.data) {
                 let order = orderResponce.data;
                 const options = {
@@ -100,7 +102,8 @@ const BookingForm = () => {
                 razor.open();
             }
         } catch (error) {
-            console.error("An Error Occurred while payment", error);
+            console.log(error.response.data.msg)
+            toast.error(error.response.data.msg);
         }
     }
 
@@ -248,7 +251,7 @@ const BookingForm = () => {
                                 </div>
 
                                 <div className="mt-4 w-full">
-                                    <button className="btn bg-emerald-600 font-semibold text-white w-full pay-btn" type="submit" disabled={isSubmitting}>{isSubmitting ? "Loading..." : "Pay Now"}</button>
+                                    <button className="btn bg-emerald-600 font-semibold text-white w-full pay-btn" type="submit" disabled={isSubmitting}>{isSubmitting ? "Loading..." : "Book Now"}</button>
                                 </div>
                                 {errors.root && <div className="text-red-500">{errors.root.message}</div>}
 
@@ -257,6 +260,7 @@ const BookingForm = () => {
                     </div>
                 </div>
             </section>
+            <Toaster className="py-3 h-[100px]" style={{ padding: '10px', borderRadius: '0px', height: '100px' }} />
         </div>
     )
 }
